@@ -1,0 +1,1626 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_VICTORIAMETRICS",
+      "label": "VictoriaMetrics",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "victoriametrics-metrics-datasource",
+      "pluginName": "VictoriaMetrics"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "12.3.1"
+    },
+    {
+      "type": "panel",
+      "id": "piechart",
+      "name": "Pie chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "victoriametrics-metrics-datasource",
+      "name": "VictoriaMetrics",
+      "version": "0.19.7"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Traefik Dashboard - a fork from 17347 (ID).",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 9,
+      "panels": [],
+      "title": "General",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 5,
+        "x": 0,
+        "y": 1
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "count(\n  traefik_config_reloads_total{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Traefik Instances",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 7,
+        "x": 5,
+        "y": 1
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    traefik_entrypoint_requests_total{\n      entrypoint=~\"$entrypoint\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (entrypoint)",
+          "format": "time_series",
+          "legendFormat": "{{entrypoint}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Requests per Entrypoint",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "https://medium.com/@tristan_96324/prometheus-apdex-alerting-d17a065e39d0",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "(\n  sum(\n    ${rate_func}(\n      traefik_entrypoint_request_duration_seconds_bucket{\n        le=\"0.3\",\n        code=\"200\",\n        entrypoint=~\"$entrypoint\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      }[$__rate_interval]\n    )\n  ) by (method) +\n  sum(\n    ${rate_func}(\n      traefik_entrypoint_request_duration_seconds_bucket{\n        le=\"1.2\",\n        code=\"200\",\n        entrypoint=~\"$entrypoint\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      }[$__rate_interval]\n    )\n  ) by (method)\n) / 2 /\n(\n  sum(\n    ${rate_func}(\n      traefik_entrypoint_request_duration_seconds_count{\n        code=\"200\",\n        entrypoint=~\"$entrypoint\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      }[$__rate_interval]\n    )\n  ) by (method)\n)",
+          "format": "time_series",
+          "legendFormat": "{{method}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Apdex Score",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Mean Distribution",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 5,
+        "x": 0,
+        "y": 3
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "sort": "desc",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    traefik_service_requests_total{\n      service=~\"$service.*\",\n      protocol=\"http\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (method, code)",
+          "format": "time_series",
+          "legendFormat": "{{method}}[{{code}}]",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Http Code ",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 23,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "topk(\n  15,\n  label_replace(\n    traefik_service_request_duration_seconds_sum{\n      service=~\"$service.*\",\n      protocol=\"http\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } /\n    traefik_service_request_duration_seconds_count{\n      service=~\"$service.*\",\n      protocol=\"http\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    },\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "format": "time_series",
+          "legendFormat": "{{method}}[{{code}}] on {{service}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Top Slow Services",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service.*\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "format": "time_series",
+          "legendFormat": "[{{code}}] on {{service}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Most Requested Services",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 11,
+      "panels": [],
+      "title": "SLO",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 10
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 20
+              },
+              {
+                "color": "dark-red",
+                "value": 30
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 29
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(\n  1 - (\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_bucket{\n          le=\"1.2\",\n          service=~\"$service.*\",\n          app_name=~\"$app_name\",\n          app_version=~\"$app_version\",\n          region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    ) /\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_count{\n          service=~\"$service.*\",\n          app_name=~\"$app_name\",\n          app_version=~\"$app_version\",\n          region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    )\n  ) > 0,\n  \"service\",\n  \"$1\",\n  \"service\",\n  \"([^@]+)@.*\"\n)",
+          "format": "time_series",
+          "legendFormat": "{{service}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Services Failing SLO of 1200ms",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 10
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 20
+              },
+              {
+                "color": "dark-red",
+                "value": 30
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 29
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(\n  1 - (\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_bucket{\n          le=\"0.3\",\n          service=~\"$service.*\",\n          app_name=~\"$app_name\",\n          app_version=~\"$app_version\",\n          region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    ) /\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_count{\n          service=~\"$service.*\",\n          app_name=~\"$app_name\",\n          app_version=~\"$app_version\",\n          region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    )\n  ) > 0,\n  \"service\",\n  \"$1\",\n  \"service\",\n  \"([^@]+)@.*\"\n)",
+          "format": "time_series",
+          "legendFormat": "{{service}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Services Failing SLO of 300ms",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
+      "id": 16,
+      "panels": [],
+      "title": "HTTP Details",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 0,
+        "y": 38
+      },
+      "id": 17,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service.*\",\n            code=~\"2..\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "format": "time_series",
+          "legendFormat": "{{method}}[{{code}}] on {{service}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "2xx Codes",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 12,
+        "y": 38
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service.*\",\n            code=~\"5..\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "format": "time_series",
+          "legendFormat": "{{method}}[{{code}}] on {{service}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "5xx Codes",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 0,
+        "y": 50
+      },
+      "id": 19,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service.*\",\n            code!~\"2..|5..\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "format": "time_series",
+          "legendFormat": "{{method}}[{{code}}] on {{service}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Other HTTP Codes",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "binBps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 62
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method) (\n        ${rate_func}(\n          traefik_service_requests_bytes_total{\n            service=~\"$service.*\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "format": "time_series",
+          "legendFormat": "{{method}} on {{service}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Requests Size",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "binBps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 71
+      },
+      "id": 24,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method) (\n        ${rate_func}(\n          traefik_service_responses_bytes_total{\n            service=~\"$service.*\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "format": "time_series",
+          "legendFormat": "{{method}} on {{service}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Responses Size",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "refresh": "15s",
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(traefik_service_requests_total,app_name)",
+        "includeAll": true,
+        "label": "App",
+        "multi": true,
+        "name": "app_name",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(traefik_service_requests_total,app_name)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(traefik_service_requests_total{app_name=~\"$app_name\"},app_version)",
+        "includeAll": true,
+        "label": "App Version",
+        "multi": true,
+        "name": "app_version",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(traefik_service_requests_total{app_name=~\"$app_name\"},app_version)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 4,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\"},region)",
+        "includeAll": true,
+        "label": "Region",
+        "multi": true,
+        "name": "region",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\"},region)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"},cluster_id)",
+        "includeAll": true,
+        "label": "Cluster",
+        "multi": true,
+        "name": "cluster_id",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"},cluster_id)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
+        "includeAll": true,
+        "label": "Environment",
+        "multi": true,
+        "name": "env",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(traefik_entrypoint_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},entrypoint)",
+        "includeAll": true,
+        "label": "Entrypoint",
+        "multi": true,
+        "name": "entrypoint",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(traefik_entrypoint_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},entrypoint)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},service)",
+        "includeAll": true,
+        "label": "Service",
+        "multi": true,
+        "name": "service",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},service)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "regex": "/([^@]+)@.*/",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "rate",
+          "value": "rate"
+        },
+        "description": "This variable controls the mathematical function used to calculate per-second rates across the dashboard.\n\n    Overview (rate): Calculates the average rate over the entire time interval. Best for spotting trends, capacity planning, and long-term views.\n\n    Debug (irate): Calculates the \"instant\" rate based on the last two data points. Best for high-resolution troubleshooting and catching micro-spikes.\n\n⚠️ Warning: irate should only be used when zoomed in to < 1 hour. On longer time ranges (e.g., 7 days), irate ignores most data points between pixels and will provide a misleading representation of your traffic.",
+        "label": "Mode",
+        "name": "rate_func",
+        "options": [
+          {
+            "selected": true,
+            "text": "Overview",
+            "value": "rate"
+          },
+          {
+            "selected": false,
+            "text": "Debug",
+            "value": "irate"
+          }
+        ],
+        "query": "Overview : rate, Debug : irate",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "15s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "utc",
+  "title": "Traefik",
+  "uid": "TYx5G24pq3d0Tw6",
+  "version": 40,
+  "weekStart": ""
+}

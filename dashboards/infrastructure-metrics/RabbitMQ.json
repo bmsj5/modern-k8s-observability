@@ -1,0 +1,3917 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_VICTORIAMETRICS",
+      "label": "VictoriaMetrics",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "victoriametrics-metrics-datasource",
+      "pluginName": "VictoriaMetrics"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "12.3.1"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "victoriametrics-metrics-datasource",
+      "name": "VictoriaMetrics",
+      "version": "0.19.7"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "RabbitMQ Dashboard - a fork from 10991 (ID).",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 80,
+      "panels": [],
+      "title": "Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 75,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg(\n  rabbitmq_erlang_uptime_seconds{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 1,
+          "legendFormat": "Uptime",
+          "range": false,
+          "refId": "A",
+          "step": 1800
+        }
+      ],
+      "title": "Uptime",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-green",
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "#000000",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 50
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "id": 76,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(\n  sum(\n    rabbitmq_process_open_fds{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }\n  )\n  /\n  sum(\n    rabbitmq_process_max_fds{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }\n  )\n)",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 1,
+          "legendFormat": "Saturation",
+          "metric": "mongodb_connections",
+          "range": false,
+          "refId": "A",
+          "step": 1800
+        }
+      ],
+      "title": "Connection Saturation",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "id": 37,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  rabbitmq_connections{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Open Connections",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Open Connections",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#000000",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-blue",
+                "value": 10000
+              },
+              {
+                "color": "dark-red",
+                "value": 100000
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "id": 77,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  rabbitmq_queue_messages{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Messages",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Messages",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Total number of queue masters  per node. \n\nThis metric makes it easy to see sub-optimal queue distribution in a cluster.\n\n* [Queue Masters, Data Locality](https://www.rabbitmq.com/ha.html#master-migration-data-locality)\n* [Queues](https://www.rabbitmq.com/queues.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 5
+      },
+      "id": 92,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  rabbitmq_queues{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Queues",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Queues",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Total number of channels on all currently opened connections.\n\nIf this metric grows monotonically it is highly likely a channel leak in one of the applications. Confirm channel leaks by using the _Channels opened_ and _Channels closed_ metrics.\n\n* [Channel Leak](https://www.rabbitmq.com/channels.html#channel-leaks)\n* [Channels](https://www.rabbitmq.com/channels.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 5
+      },
+      "id": 91,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  rabbitmq_channels{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Channels",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Channels",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 5
+      },
+      "id": 41,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  rabbitmq_global_consumers{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 1,
+          "legendFormat": "Consumers",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Consumers",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 5
+      },
+      "id": 66,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  rabbitmq_global_publishers{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 1,
+          "legendFormat": "Publishers",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Publishers",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 27,
+      "panels": [],
+      "title": "QUEUED MESSAGES",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Total number of ready messages ready to be delivered to consumers.\n\nAim to keep this value as low as possible. RabbitMQ behaves best when messages are flowing through it. It's OK for publishers to occasionally outpace consumers, but the expectation is that consumers will eventually process all ready messages.\n\nIf this metric keeps increasing, your system will eventually run out of memory and/or disk space. Consider using TTL or Queue Length Limit to prevent unbounded message growth.\n\n* [Queues](https://www.rabbitmq.com/queues.html)\n* [Consumers](https://www.rabbitmq.com/consumers.html)\n* [Queue Length Limit](https://www.rabbitmq.com/maxlength.html)\n* [Time-To-Live and Expiration](https://www.rabbitmq.com/ttl.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#000000",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-blue",
+                "value": 10000
+              },
+              {
+                "color": "dark-red",
+                "value": 100000
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      },
+      "id": 64,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  rabbitmq_queue_messages_ready{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Ready messages",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The total number of messages that are either in-flight to consumers, currently being processed by consumers or simply waiting for the consumer acknowledgements to be processed by the queue. Until the queue processes the message acknowledgement, the message will remain unacknowledged.\n\n* [Queues](https://www.rabbitmq.com/queues.html)\n* [Confirms and Acknowledgements](https://www.rabbitmq.com/confirms.html)\n* [Consumer Prefetch](https://www.rabbitmq.com/consumer-prefetch.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#000000",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-blue",
+                "value": 100
+              },
+              {
+                "color": "dark-red",
+                "value": 500
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 10
+      },
+      "id": 65,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  rabbitmq_queue_messages_unacked{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Unacknowledged messages",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 11,
+      "panels": [],
+      "title": "INCOMING MESSAGES",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The incoming message rate before any routing rules are applied.\n\nIf this value is lower than the number of messages published to queues, it may indicate that some messages are delivered to more than one queue.\n\nIf this value is higher than the number of messages published to queues, messages cannot be routed and will either be dropped or returned to publishers.\n\n* [Publishers](https://www.rabbitmq.com/publishers.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-green",
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "index": 0,
+                  "text": "0"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 62,
+      "maxDataPoints": 100,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_received_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Incoming Messages",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Incoming messages",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of messages confirmed by the broker to publishers. Publishers must opt-in to receive message confirmations.\n\nIf this metric is consistently at zero it may suggest that publisher confirms are not used by clients. The safety of published messages is likely to be at risk.\n\n* [Publisher Confirms](https://www.rabbitmq.com/confirms.html#publisher-confirms)\n* [Publisher Confirms and Data Safety](https://www.rabbitmq.com/publishers.html#data-safety)\n* [When Will Published Messages Be Confirmed by the Broker?](https://www.rabbitmq.com/confirms.html#when-publishes-are-confirmed)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_confirmed_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Confirmed",
+          "refId": "A"
+        }
+      ],
+      "title": "Messages confirmed to publishers",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of messages received from publishers and successfully routed to the master queue replicas.\n\n* [Queues](https://www.rabbitmq.com/queues.html)\n* [Publishers](https://www.rabbitmq.com/publishers.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "id": 61,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_routed_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Routed",
+          "refId": "A"
+        }
+      ],
+      "title": "Messages routed to queues",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of messages received from publishers that have publisher confirms enabled and the broker has not confirmed yet.\n\n* [Publishers](https://www.rabbitmq.com/publishers.html)\n* [Confirms and Acknowledgements](https://www.rabbitmq.com/confirms.html)\n* [When Will Published Messages Be Confirmed by the Broker?](https://www.rabbitmq.com/confirms.html#when-publishes-are-confirmed)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 21
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_received_confirm_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)\n-\nsum(\n  rate(\n    rabbitmq_global_messages_confirmed_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Unconfirmed",
+          "refId": "A"
+        }
+      ],
+      "title": "Messages unconfirmed to publishers",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of messages that cannot be routed and are dropped. \n\nAny value above zero means message loss and likely suggests a routing problem on the publisher end.\n\n* [Unroutable Message Handling](https://www.rabbitmq.com/publishers.html#unroutable)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 26
+      },
+      "id": 34,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_unroutable_dropped_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Dropped ",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  rate(\n    rabbitmq_global_messages_unroutable_returned_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      cell_id=~\"$cell_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Returned",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Unroutable messages dropped & returned",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      },
+      "id": 29,
+      "panels": [],
+      "title": "OUTGOING MESSAGES",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of messages delivered to consumers. It includes messages that have been redelivered.\n\nThis metric does not include messages that have been fetched by consumers using `basic.get` (consumed by polling).\n\n* [Consumers](https://www.rabbitmq.com/consumers.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_delivered_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Outgoing messages",
+          "refId": "A"
+        }
+      ],
+      "title": "Outgoing messages",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of messages that have been redelivered to consumers. It includes messages that have been requeued automatically and redelivered due to channel exceptions or connection closures.\n\nHaving some redeliveries is expected, but if this metric is consistently non-zero, it is worth investigating why.\n\n* [Negative Acknowledgement and Requeuing of Deliveries](https://www.rabbitmq.com/confirms.html#consumer-nacks-requeue)\n* [Consumers](https://www.rabbitmq.com/consumers.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "id": 83,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_redelivered_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Redelivered",
+          "refId": "A"
+        }
+      ],
+      "title": "Messages redelivered",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of message deliveries to consumers that use manual acknowledgement mode.\n\nWhen this mode is used, RabbitMQ waits for consumers to acknowledge messages before more messages can be delivered.\n\nThis is the safest way of consuming messages.\n\n* [Consumer Acknowledgements](https://www.rabbitmq.com/confirms.html)\n* [Consumer Prefetch](https://www.rabbitmq.com/consumer-prefetch.html)\n* [Consumer Acknowledgement Modes, Prefetch and Throughput](https://www.rabbitmq.com/confirms.html#channel-qos-prefetch-throughput)\n* [Consumers](https://www.rabbitmq.com/consumers.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 37
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_delivered_consume_manual_ack_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Manual Ack Delivery",
+          "refId": "A"
+        }
+      ],
+      "title": "Messages delivered with manual ack",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of message deliveries to consumers that use automatic acknowledgement mode.\n\nWhen this mode is used, RabbitMQ does not wait for consumers to acknowledge message deliveries.\n\nThis mode is fire-and-forget and does not offer any delivery safety guarantees. It tends to provide higher throughput and it may lead to consumer overload  and higher consumer memory usage.\n\n* [Consumer Acknowledgement Modes, Prefetch and Throughput](https://www.rabbitmq.com/confirms.html#channel-qos-prefetch-throughput)\n* [Consumers](https://www.rabbitmq.com/consumers.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 37
+      },
+      "id": 84,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_delivered_consume_auto_ack_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Auto Ack Delivery",
+          "refId": "A"
+        }
+      ],
+      "title": "Messages delivered auto ack",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of message acknowledgements coming from consumers that use manual acknowledgement mode.\n\n* [Consumer Acknowledgements](https://www.rabbitmq.com/confirms.html)\n* [Consumer Prefetch](https://www.rabbitmq.com/consumer-prefetch.html)\n* [Consumer Acknowledgement Modes, Prefetch and Throughput](https://www.rabbitmq.com/confirms.html#channel-qos-prefetch-throughput)\n* [Consumers](https://www.rabbitmq.com/consumers.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 42
+      },
+      "id": 81,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_acknowledged_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Acknowledged",
+          "refId": "A"
+        }
+      ],
+      "title": "Messages acknowledged",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of messages delivered to polling consumers that use automatic acknowledgement mode.\n\nThe use of polling consumers is highly inefficient and therefore strongly discouraged.\n\n* [Fetching individual messages](https://www.rabbitmq.com/consumers.html#fetching)\n* [Consumers](https://www.rabbitmq.com/consumers.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 42
+      },
+      "id": 85,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_delivered_get_auto_ack_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Auto Ack Gets",
+          "refId": "A"
+        }
+      ],
+      "title": "Polling operations with auto ack",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of polling consumer operations that yield no result.\n\nAny value above zero means that RabbitMQ resources are wasted by polling consumers.\n\nCompare this metric to the other polling consumer metrics to see the inefficiency rate.\n\nThe use of polling consumers is highly inefficient and therefore strongly discouraged.\n\n* [Fetching individual messages](https://www.rabbitmq.com/consumers.html#fetching)\n* [Consumers](https://www.rabbitmq.com/consumers.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 47
+      },
+      "id": 82,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_get_empty_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Empty Gets",
+          "refId": "A"
+        }
+      ],
+      "title": "Polling operations that yield no result ",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of messages delivered to polling consumers that use manual acknowledgement mode.\n\nThe use of polling consumers is highly inefficient and therefore strongly discouraged.\n\n* [Fetching individual messages](https://www.rabbitmq.com/consumers.html#fetching)\n* [Consumers](https://www.rabbitmq.com/consumers.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "mps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 47
+      },
+      "id": 86,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_global_messages_delivered_get_manual_ack_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Manual Ack Gets",
+          "refId": "A"
+        }
+      ],
+      "title": "Polling operations with manual ack",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 52
+      },
+      "id": 53,
+      "panels": [],
+      "title": "QUEUES",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Total number of queue masters  per node. \n\nThis metric makes it easy to see sub-optimal queue distribution in a cluster.\n\n* [Queue Masters, Data Locality](https://www.rabbitmq.com/ha.html#master-migration-data-locality)\n* [Queues](https://www.rabbitmq.com/queues.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-green",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 0,
+        "y": 53
+      },
+      "id": 58,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_queues_declared_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Declared",
+          "refId": "A"
+        }
+      ],
+      "title": "Queues declared",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of new queues created (as opposed to redeclarations).\n\nLow sustained values above zero are to be expected. High rates may be indicative of queue churn or high rates of connection recovery. Confirm connection recovery rates by using the _Connections opened_ metric.\n\n* [Queues](https://www.rabbitmq.com/queues.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 2
+              },
+              {
+                "color": "dark-red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 8,
+        "y": 53
+      },
+      "id": 60,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_queues_created_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Created",
+          "refId": "A"
+        }
+      ],
+      "title": "Queues created",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of queues deleted.\n\nLow sustained values above zero are to be expected. High rates may be indicative of queue churn or high rates of connection recovery. Confirm connection recovery rates by using the _Connections opened_ metric.\n\n* [Queues](https://www.rabbitmq.com/queues.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 2
+              },
+              {
+                "color": "dark-red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 53
+      },
+      "id": 59,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_queues_deleted_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Deleted",
+          "refId": "A"
+        }
+      ],
+      "title": "Queues deleted",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 58
+      },
+      "id": 51,
+      "panels": [],
+      "title": "CHANNELS",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Total number of channels on all currently opened connections.\n\nIf this metric grows monotonically it is highly likely a channel leak in one of the applications. Confirm channel leaks by using the _Channels opened_ and _Channels closed_ metrics.\n\n* [Channel Leak](https://www.rabbitmq.com/channels.html#channel-leaks)\n* [Channels](https://www.rabbitmq.com/channels.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 59
+      },
+      "id": 54,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  rabbitmq_channels{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Channels",
+          "refId": "A"
+        }
+      ],
+      "title": "Channels",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of new channels opened by applications across all connections. Channels are expected to be long-lived.\n\nLow sustained values above zero are to be expected. High rates may be indicative of channel churn or mass connection recovery. Confirm connection recovery rates by using the _Connections opened_ metric.\n\n* [High Channel Churn](https://www.rabbitmq.com/channels.html#high-channel-churn)\n* [Channels](https://www.rabbitmq.com/channels.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 2
+              },
+              {
+                "color": "dark-red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 59
+      },
+      "id": 55,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_channels_opened_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Opened",
+          "refId": "A"
+        }
+      ],
+      "title": "Channels opened / s",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of channels closed by applications across all connections. Channels are expected to be long-lived.\n\nLow sustained values above zero are to be expected. High rates may be indicative of channel churn or mass connection recovery. Confirm connection recovery rates by using the _Connections opened_ metric.\n\n* [High Channel Churn](https://www.rabbitmq.com/channels.html#high-channel-churn)\n* [Channels](https://www.rabbitmq.com/channels.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 2
+              },
+              {
+                "color": "dark-red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 59
+      },
+      "id": 56,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_channels_closed_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Closed",
+          "refId": "A"
+        }
+      ],
+      "title": "Channels closed",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 64
+      },
+      "id": 46,
+      "panels": [],
+      "title": "CONNECTIONS",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Total number of client connections.\n\nIf this metric grows monotonically it is highly likely a connection leak in one of the applications. Confirm connection leaks by using the _Connections opened_ and _Connections closed_ metrics.\n\n* [Connection Leak](https://www.rabbitmq.com/connections.html#monitoring)\n* [Connections](https://www.rabbitmq.com/connections.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 65
+      },
+      "id": 88,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  rabbitmq_connections{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Connections",
+          "refId": "A"
+        }
+      ],
+      "title": "Connections",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of new connections opened by clients. Connections are expected to be long-lived.\n\nLow sustained values above zero are to be expected. High rates may be indicative of connection churn or mass connection recovery.\n\n* [Connection Leak](https://www.rabbitmq.com/connections.html#monitoring)\n* [Connections](https://www.rabbitmq.com/connections.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 2
+              },
+              {
+                "color": "dark-red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 65
+      },
+      "id": 89,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_connections_opened_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Opened",
+          "refId": "A"
+        }
+      ],
+      "title": "Connections opened ",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "The rate of connections closed. Connections are expected to be long-lived.\n\nLow sustained values above zero are to be expected. High rates may be indicative of connection churn or mass connection recovery.\n\n* [Connections](https://www.rabbitmq.com/connections.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 2
+              },
+              {
+                "color": "dark-red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 65
+      },
+      "id": 90,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    rabbitmq_connections_closed_total{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Closed",
+          "refId": "A"
+        }
+      ],
+      "title": "Connections closed",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 70
+      },
+      "id": 78,
+      "panels": [],
+      "title": "Resources",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "MB",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 71
+      },
+      "id": 79,
+      "options": {
+        "alertThreshold": true,
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "avg(\n  rabbitmq_process_resident_memory_bytes{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "resident",
+          "range": true,
+          "refId": "A",
+          "step": 240
+        }
+      ],
+      "title": "RAM Utilization (avg)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "If the value is zero or less, the memory alarm will be triggered and all publishing connections across all cluster nodes will be blocked.\n\nThis value can temporarily go negative because the memory alarm is triggered with a slight delay.\n\nThe kernel's view of the amount of memory used by the node can differ from what the node itself can observe. This means that this value can be negative for a sustained period of time.\n\nBy default nodes use resident set size (RSS) to compute how much memory they use. This strategy can be changed (see the guides below).\n\n* [Alarms](https://www.rabbitmq.com/alarms.html)\n* [Memory Alarms](https://www.rabbitmq.com/memory.html)\n* [Reasoning About Memory Use](https://www.rabbitmq.com/memory-use.html)\n* [Blocked Connection Notifications](https://www.rabbitmq.com/connection-blocked.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "dark-red",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 79
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "min(\n  rabbitmq_resident_memory_limit_bytes{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n  -\n  rabbitmq_process_resident_memory_bytes{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Free Memory",
+          "refId": "A"
+        }
+      ],
+      "title": "RAM available before publishers blocked (min)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "This metric is reported for the partition where the RabbitMQ data directory is stored.\n\nIf the value is zero or less, the disk alarm will be triggered and all publishing connections across all cluster nodes will be blocked.\n\nThis value can temporarily go negative because the free disk space alarm is triggered with a slight delay.\n\n* [Alarms](https://www.rabbitmq.com/alarms.html)\n* [Disk Space Alarms](https://www.rabbitmq.com/disk-alarms.html)\n* [Disk Space](https://www.rabbitmq.com/production-checklist.html#resource-limits-disk-space)\n* [Persistence Configuration](https://www.rabbitmq.com/persistence-conf.html)\n* [Blocked Connection Notifications](https://www.rabbitmq.com/connection-blocked.html)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "dark-red",
+                "value": 1073741824
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 79
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "min(\n  rabbitmq_disk_space_available_bytes{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    k8s_node_name=~\"$k8s_node_name\",\n    k8s_pod_name=~\"$k8s_pod_name\",\n    env=~\"$env\"\n  }\n)",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Free Disk",
+          "refId": "A"
+        }
+      ],
+      "title": "Disk space available before publishers blocked (min)",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "refresh": "15s",
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(rabbitmq_connections,app_name)",
+        "includeAll": true,
+        "label": "App",
+        "multi": true,
+        "name": "app_name",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(rabbitmq_connections,app_name)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(rabbitmq_connections{app_name=~\"$app_name\"},app_version)",
+        "includeAll": true,
+        "label": "App Version",
+        "multi": true,
+        "name": "app_version",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(rabbitmq_connections{app_name=~\"$app_name\"},app_version)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 4,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(rabbitmq_connections{app_name=~\"$app_name\", app_version=~\"$app_version\"},region)",
+        "includeAll": true,
+        "label": "Region",
+        "multi": true,
+        "name": "region",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(rabbitmq_connections{app_name=~\"$app_name\", app_version=~\"$app_version\"},region)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(rabbitmq_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"},cluster_id)",
+        "includeAll": true,
+        "label": "Cluster",
+        "multi": true,
+        "name": "cluster_id",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(rabbitmq_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"},cluster_id)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(rabbitmq_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},k8s_node_name)",
+        "includeAll": true,
+        "label": "Node",
+        "multi": true,
+        "name": "k8s_node_name",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(rabbitmq_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},k8s_node_name)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(rabbitmq_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\"},k8s_pod_name)",
+        "includeAll": true,
+        "label": "Pod",
+        "multi": true,
+        "name": "k8s_pod_name",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(rabbitmq_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\"},k8s_pod_name)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(rabbitmq_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\", k8s_pod_name=~\"$k8s_pod_name\"},env)",
+        "includeAll": true,
+        "label": "Environment",
+        "multi": true,
+        "name": "env",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(rabbitmq_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\", k8s_pod_name=~\"$k8s_pod_name\"},env)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "rate",
+          "value": "rate"
+        },
+        "description": "This variable controls the mathematical function used to calculate per-second rates across the dashboard.\n\n    Overview (rate): Calculates the average rate over the entire time interval. Best for spotting trends, capacity planning, and long-term views.\n\n    Debug (irate): Calculates the \"instant\" rate based on the last two data points. Best for high-resolution troubleshooting and catching micro-spikes.\n\n⚠️ Warning: irate should only be used when zoomed in to < 1 hour. On longer time ranges (e.g., 7 days), irate ignores most data points between pixels and will provide a misleading representation of your traffic.",
+        "label": "Mode",
+        "name": "rate_func",
+        "options": [
+          {
+            "selected": true,
+            "text": "Overview",
+            "value": "rate"
+          },
+          {
+            "selected": false,
+            "text": "Debug",
+            "value": "irate"
+          }
+        ],
+        "query": "Overview : rate, Debug : irate",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "15s",
+      "30s",
+      "1m",
+      "5m",
+      "10m"
+    ]
+  },
+  "timezone": "utc",
+  "title": "RabbitMQ",
+  "uid": "VvwfTFLesjpKkcQ",
+  "version": 19,
+  "weekStart": ""
+}

@@ -1,0 +1,2631 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_VICTORIAMETRICS",
+      "label": "VictoriaMetrics",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "victoriametrics-metrics-datasource",
+      "pluginName": "VictoriaMetrics"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "12.3.1"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "victoriametrics-metrics-datasource",
+      "name": "VictoriaMetrics",
+      "version": "0.19.7"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Kubernetes Dashboard - a fork from dotdc/grafana-dashboards-kubernetes/k8s-views-pods.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 43,
+      "panels": [],
+      "title": "Information",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Panel only works when a single pod is selected.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_pod_info{\n  namespace=\"$namespace\", \n  pod=\"$pod\", \n  app_name=~\"$app_name\", \n  app_version=~\"$app_version\", \n  region=~\"$region\", \n  cluster_id=~\"$cluster_id\", \n  env=~\"$env\"\n}",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{ created_by_kind }}: {{ created_by_name }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Created by",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Panel only works when a single pod is selected.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "links": [
+            {
+              "title": "",
+              "url": "/d/k8s_views_nodes/kubernetes-views-nodes?var-datasource=${datasource}&var-node=${__field.labels.node}&${cluster:queryparam}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "id": 33,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_pod_info{\n  namespace=\"$namespace\", \n  pod=\"$pod\", \n  app_name=~\"$app_name\", \n  app_version=~\"$app_version\", \n  region=~\"$region\", \n  cluster_id=~\"$cluster_id\", \n  env=~\"$env\"\n}",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{ node }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Running on",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Panel only works when a single pod is selected.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "id": 41,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_pod_info{\n  namespace=\"$namespace\", \n  pod=\"$pod\", \n  app_name=~\"$app_name\", \n  app_version=~\"$app_version\", \n  region=~\"$region\", \n  cluster_id=~\"$cluster_id\", \n  env=~\"$env\"\n}",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{ pod_ip }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Pod IP",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Panel only works when a single pod is selected.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 8,
+        "x": 0,
+        "y": 3
+      },
+      "id": 53,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_pod_status_qos_class{\n  namespace=\"$namespace\", \n  pod=\"$pod\", \n  app_name=~\"$app_name\", \n  app_version=~\"$app_version\", \n  region=~\"$region\", \n  cluster_id=~\"$cluster_id\", \n  env=~\"$env\"\n} > 0",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{ qos_class }}",
+          "refId": "A"
+        }
+      ],
+      "title": "QOS Class",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Panel only works when a single pod is selected.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 8,
+        "x": 8,
+        "y": 3
+      },
+      "id": 56,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_pod_container_status_last_terminated_reason{\n  namespace=\"$namespace\", \n  pod=\"$pod\", \n  app_name=~\"$app_name\", \n  app_version=~\"$app_version\", \n  region=~\"$region\", \n  cluster_id=~\"$cluster_id\", \n  env=~\"$env\"\n}",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{ reason }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Last Terminated Reason",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "Panel only works when a single pod is selected.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#000000",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 8,
+        "x": 16,
+        "y": 3
+      },
+      "id": 57,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": true
+        },
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_pod_container_status_last_terminated_exitcode{\n  namespace=\"$namespace\", \n  pod=\"$pod\", \n  app_name=~\"$app_name\", \n  app_version=~\"$app_version\", \n  region=~\"$region\", \n  cluster_id=~\"$cluster_id\", \n  env=~\"$env\"\n}",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Last Terminated Exit Code",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 47,
+      "panels": [],
+      "title": "Resources",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 50
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 0,
+        "y": 6
+      },
+      "id": 39,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  ${rate_func}(\n    container_cpu_time_seconds_total{\n      k8s_namespace_name=\"$namespace\",\n      k8s_pod_name=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) / sum(\n  kube_pod_container_resource_requests{\n    namespace=\"$namespace\",\n    pod=\"$pod\",\n    resource=\"cpu\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\",\n      namespace=\"$namespace\",\n      pod=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } == 1\n  )\n)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "Requests",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Requests Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 50
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 3,
+        "y": 6
+      },
+      "id": 48,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  ${rate_func}(\n    container_cpu_time_seconds_total{\n      k8s_namespace_name=\"$namespace\",\n      k8s_pod_name=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) / sum(\n  kube_pod_container_resource_limits{\n    namespace=\"$namespace\",\n    pod=\"$pod\",\n    resource=\"cpu\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\",\n      namespace=\"$namespace\",\n      pod=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } == 1\n  )\n)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "Limits",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Limits Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 50
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 6,
+        "y": 6
+      },
+      "id": 40,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  container_memory_working_set_bytes{\n    k8s_namespace_name=\"$namespace\",\n    k8s_pod_name=\"$pod\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n) / sum(\n  kube_pod_container_resource_requests{\n    namespace=\"$namespace\",\n    pod=\"$pod\",\n    resource=\"memory\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\",\n      namespace=\"$namespace\",\n      pod=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } == 1\n  )\n)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "Requests",
+          "refId": "A"
+        }
+      ],
+      "title": "RAM Requests Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 50
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 9,
+        "y": 6
+      },
+      "id": 49,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  container_memory_working_set_bytes{\n    k8s_namespace_name=\"$namespace\",\n    k8s_pod_name=\"$pod\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n) / sum(\n  kube_pod_container_resource_limits{\n    namespace=\"$namespace\",\n    pod=\"$pod\",\n    resource=\"memory\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\",\n      namespace=\"$namespace\",\n      pod=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } == 1\n  )\n)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "Limits",
+          "refId": "B"
+        }
+      ],
+      "title": "RAM Limits Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false,
+            "minWidth": 100
+          },
+          "decimals": 4,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory Requests"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory Limits"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory Used"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 38,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  kube_pod_container_resource_requests{\n    resource=\"cpu\",\n    namespace=\"$namespace\", \n    pod=\"$pod\", \n    app_name=~\"$app_name\", \n    app_version=~\"$app_version\", \n    region=~\"$region\", \n    cluster_id=~\"$cluster_id\", \n    env=~\"$env\"\n  } \n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\", \n      namespace=\"$namespace\", \n      pod=\"$pod\", \n      app_name=~\"$app_name\", \n      app_version=~\"$app_version\", \n      region=~\"$region\", \n      cluster_id=~\"$cluster_id\", \n      env=~\"$env\"\n    } \n  == 1)\n) by (container)",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  kube_pod_container_resource_limits{\n    resource=\"cpu\",\n    namespace=\"$namespace\", \n    pod=\"$pod\", \n    app_name=~\"$app_name\", \n    app_version=~\"$app_version\", \n    region=~\"$region\", \n    cluster_id=~\"$cluster_id\", \n    env=~\"$env\"\n  } \n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\", \n      namespace=\"$namespace\", \n      pod=\"$pod\", \n      app_name=~\"$app_name\", \n      app_version=~\"$app_version\", \n      region=~\"$region\", \n      cluster_id=~\"$cluster_id\", \n      env=~\"$env\"\n    }\n  == 1)\n) by (container)",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  kube_pod_container_resource_requests{\n    resource=\"memory\", \n    namespace=\"$namespace\", \n    pod=\"$pod\", \n    app_name=~\"$app_name\", \n    app_version=~\"$app_version\", \n    region=~\"$region\", \n    cluster_id=~\"$cluster_id\", \n    env=~\"$env\"\n  } \n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\", \n      namespace=\"$namespace\", \n      pod=\"$pod\", \n      app_name=~\"$app_name\", \n      app_version=~\"$app_version\", \n      region=~\"$region\", \n      cluster_id=~\"$cluster_id\", \n      env=~\"$env\"\n    } \n  == 1)\n) by (container)",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  kube_pod_container_resource_limits{\n    resource=\"memory\", \n    namespace=\"$namespace\", \n    pod=\"$pod\", \n    app_name=~\"$app_name\", \n    app_version=~\"$app_version\", \n    region=~\"$region\", \n    cluster_id=~\"$cluster_id\", \n    env=~\"$env\"\n  } \n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\", \n      namespace=\"$namespace\", \n      pod=\"$pod\", \n      app_name=~\"$app_name\", \n      app_version=~\"$app_version\", \n      region=~\"$region\", \n      cluster_id=~\"$cluster_id\", \n      env=~\"$env\"\n    } \n  == 1)\n) by (container)",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  ${rate_func}(\n    label_replace(\n      container_cpu_time_seconds_total{\n        k8s_container_name!=\"\", \n        k8s_namespace_name=\"$namespace\", \n        k8s_pod_name=\"$pod\", \n        app_name=~\"$app_name\", \n        app_version=~\"$app_version\", \n        region=~\"$region\", \n        cluster_id=~\"$cluster_id\", \n        env=~\"$env\"\n      },\n      \"container\",\n      \"$1\",\n      \"k8s_container_name\",\n      \"(.+)\"\n    )[$__rate_interval]\n  )\n) by (container)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  label_replace(\n    container_memory_working_set_bytes{\n      k8s_container_name!=\"\", \n      k8s_namespace_name=\"$namespace\", \n      k8s_pod_name=\"$pod\", \n      app_name=~\"$app_name\", \n      app_version=~\"$app_version\", \n      region=~\"$region\", \n      cluster_id=~\"$cluster_id\", \n      env=~\"$env\"\n    },\n    \"container\",\n    \"$1\",\n    \"k8s_container_name\",\n    \"(.+)\"\n  )\n) by (container)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "range": false,
+          "refId": "F"
+        }
+      ],
+      "title": "Resources by Container",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "container"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 4": true,
+              "__name__": true,
+              "__name__ 1": true,
+              "__name__ 2": true,
+              "__name__ 3": true,
+              "__name__ 4": true,
+              "container": false,
+              "endpoint": true,
+              "endpoint 2": true,
+              "endpoint 3": true,
+              "endpoint 4": true,
+              "instance": true,
+              "instance 2": true,
+              "instance 3": true,
+              "instance 4": true,
+              "job": true,
+              "job 2": true,
+              "job 3": true,
+              "job 4": true,
+              "namespace": true,
+              "namespace 2": true,
+              "namespace 3": true,
+              "namespace 4": true,
+              "node": true,
+              "node 2": true,
+              "node 3": true,
+              "node 4": true,
+              "pod": true,
+              "pod 2": true,
+              "pod 3": true,
+              "pod 4": true,
+              "resource 1": true,
+              "resource 2": true,
+              "resource 3": true,
+              "resource 4": true,
+              "service": true,
+              "service 2": true,
+              "service 3": true,
+              "service 4": true,
+              "uid 1": true,
+              "uid 2": true,
+              "uid 3": true,
+              "uid 4": true,
+              "unit 1": true,
+              "unit 2": true,
+              "unit 3": true,
+              "unit 4": true
+            },
+            "indexByName": {
+              "Time 1": 7,
+              "Time 2": 8,
+              "Time 3": 9,
+              "Time 4": 10,
+              "Time 5": 11,
+              "Time 6": 12,
+              "Value #A": 2,
+              "Value #B": 3,
+              "Value #C": 5,
+              "Value #D": 6,
+              "Value #E": 1,
+              "Value #F": 4,
+              "container": 0
+            },
+            "renameByName": {
+              "Value #A": "CPU Requests",
+              "Value #B": "CPU Limits",
+              "Value #C": "Memory Requests",
+              "Value #D": "Memory Limits",
+              "Value #E": "CPU Used",
+              "Value #F": "Memory Used",
+              "container": "Container"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Percent",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "#ffffff",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 50
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 14
+      },
+      "id": 50,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "sum(\n  ${rate_func}(\n    label_replace(\n      container_cpu_time_seconds_total{\n        k8s_namespace_name=\"$namespace\",\n        k8s_pod_name=\"$pod\",\n        k8s_container_name!=\"\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      },\n      \"container\",\n      \"$1\",\n      \"k8s_container_name\",\n      \"(.+)\"\n    )[$__rate_interval]\n  )\n) by (container) / sum(\n  kube_pod_container_resource_requests{\n    namespace=\"$namespace\",\n    pod=\"$pod\",\n    resource=\"cpu\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\",\n      namespace=\"$namespace\",\n      pod=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } == 1\n  )\n) by (container)",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{ container }}  REQUESTS",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  ${rate_func}(\n    label_replace(\n      container_cpu_time_seconds_total{\n        k8s_namespace_name=\"$namespace\",\n        k8s_pod_name=\"$pod\",\n        k8s_container_name!=\"\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      },\n      \"container\",\n      \"$1\",\n      \"k8s_container_name\",\n      \"(.+)\"\n    )[$__rate_interval]\n  )\n) by (container) / sum(\n  kube_pod_container_resource_limits{\n    namespace=\"$namespace\",\n    pod=\"$pod\",\n    resource=\"cpu\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\",\n      namespace=\"$namespace\",\n      pod=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } == 1\n  )\n) by (container)",
+          "format": "time_series",
+          "hide": false,
+          "legendFormat": "{{ container }}  LIMITS",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "CPU Utilization / Requests & Limits by Container",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Percent",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "#ffffff",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 50
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 14
+      },
+      "id": 30,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "sum(\n  label_replace(\n    container_memory_working_set_bytes{\n      k8s_namespace_name=\"$namespace\",\n      k8s_pod_name=\"$pod\",\n      k8s_container_name!=\"\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    },\n    \"container\",\n    \"$1\",\n    \"k8s_container_name\",\n    \"(.+)\"\n  )\n) by (container) / sum(\n  kube_pod_container_resource_requests{\n    namespace=\"$namespace\",\n    pod=\"$pod\",\n    resource=\"memory\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\",\n      namespace=\"$namespace\",\n      pod=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } == 1\n  )\n) by (container)",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{ container }} REQUESTS",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n  label_replace(\n    container_memory_working_set_bytes{\n      k8s_namespace_name=\"$namespace\",\n      k8s_pod_name=\"$pod\",\n      k8s_container_name!=\"\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    },\n    \"container\",\n    \"$1\",\n    \"k8s_container_name\",\n    \"(.+)\"\n  )\n) by (container) / sum(\n  kube_pod_container_resource_limits{\n    namespace=\"$namespace\",\n    pod=\"$pod\",\n    resource=\"memory\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n  and on(namespace, pod) max by (namespace, pod) (\n    kube_pod_status_phase{\n      phase=\"Running\",\n      namespace=\"$namespace\",\n      pod=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } == 1\n  )\n) by (container)",
+          "format": "time_series",
+          "hide": false,
+          "legendFormat": "{{ container }} LIMITS",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "RAM Utilization / Requests & Limits by Container",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "CPU Cores",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 4,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
+      "id": 29,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "sum(\n  ${rate_func}(\n    label_replace(\n      container_cpu_time_seconds_total{\n        k8s_namespace_name=\"$namespace\",\n        k8s_pod_name=\"$pod\",\n        k8s_container_name!=\"\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      },\n      \"container\",\n      \"$1\",\n      \"k8s_container_name\",\n      \"(.+)\"\n    )[$__rate_interval]\n  )\n) by (container, id)",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{ container }}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Utilization by Container",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Bytes",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "id": 51,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "sum(\n  label_replace(\n    container_memory_working_set_bytes{\n      k8s_namespace_name=\"$namespace\",\n      k8s_pod_name=\"$pod\",\n      k8s_container_name!=\"\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    },\n    \"container\",\n    \"$1\",\n    \"k8s_container_name\",\n    \"(.+)\"\n  )\n) by (container, id)",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{ container }}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "RAM Utilization by Container",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "SECONDS",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 25,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 30
+      },
+      "id": 59,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "sum(\n  ${rate_func}(\n    label_replace(\n      container_cpu_cfs_throttled_seconds_total{\n        k8s_namespace_name=\"$namespace\",\n        k8s_pod_name=\"$pod\",\n        k8s_container_name!=\"\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      },\n      \"container\",\n      \"$1\",\n      \"k8s_container_name\",\n      \"(.+)\"\n    )[$__rate_interval]\n  )\n) by (container)",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{ container }}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Throttled Seconds by Container",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
+      "id": 62,
+      "panels": [],
+      "title": "Kubernetes",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 39
+      },
+      "id": 60,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  increase(\n    container_oom_events_total{\n      k8s_namespace_name=\"$namespace\",\n      k8s_pod_name=\"$pod\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (k8s_container_name) > 0",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{ k8s_container_name }}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "OOM Events by Container",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 39
+      },
+      "id": 61,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n  increase(\n    kube_pod_container_status_restarts_total{\n      namespace=\"$namespace\",\n      pod=\"$pod\", \n      container!=\"\", \n      app_name=~\"$app_name\", \n      app_version=~\"$app_version\", \n      region=~\"$region\", \n      cluster_id=~\"$cluster_id\", \n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (container) > 0",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{ container }}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Container Restarts by Container",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false,
+            "wrapText": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "#EAB839",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "reason"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "CrashLoopBackOff": {
+                        "color": "light-red",
+                        "index": 0,
+                        "text": "CrashLoopBackOff"
+                      },
+                      "ErrImagePull": {
+                        "color": "light-orange",
+                        "index": 1,
+                        "text": "ErrImagePull"
+                      },
+                      "ImagePullBackOff": {
+                        "color": "light-orange",
+                        "index": 2,
+                        "text": "ImagePullBackOff"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 47
+      },
+      "id": 63,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_pod_container_status_waiting_reason{\n  reason=~\"ErrImagePull|ImagePullBackOff|CrashLoopBackOff\", \n  app_name=~\"$app_name\", \n  app_version=~\"$app_version\", \n  region=~\"$region\", \n  cluster_id=~\"$cluster_id\", \n  env=~\"$env\"\n} == 1",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Pods with Container Issues",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "keepLabels": [
+              "namespace",
+              "pod",
+              "reason",
+              "container"
+            ],
+            "mode": "columns"
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "namespace",
+                "pod",
+                "reason",
+                "container"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "container": "Container",
+              "namespace": "Namespace",
+              "pod": "Pod Name",
+              "reason": "Reason"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Pod Name"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false,
+            "wrapText": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "#EAB839",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "condition"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "false": {
+                        "color": "light-red",
+                        "index": 0,
+                        "text": "False"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 104
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 47
+      },
+      "id": 64,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_pod_status_scheduled{\n  condition=\"false\", \n  app_name=~\"$app_name\", \n  app_version=~\"$app_version\", \n  region=~\"$region\", \n  cluster_id=~\"$cluster_id\", \n  env=~\"$env\"\n} == 1",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Unscheduled Pods",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "keepLabels": [
+              "namespace",
+              "pod",
+              "reason",
+              "container"
+            ],
+            "mode": "columns"
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "container",
+                "namespace",
+                "pod",
+                "condition"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "condition": 3,
+              "container": 0,
+              "namespace": 1,
+              "pod": 2
+            },
+            "renameByName": {
+              "condition": "Condition",
+              "container": "Container",
+              "namespace": "Namespace",
+              "pod": "Pod Name"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 55
+      },
+      "id": 45,
+      "panels": [],
+      "title": "Network",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 56
+      },
+      "id": 31,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "sum(\n  ${rate_func}(\n    k8s_pod_network_io_bytes_total{\n      direction=\"receive\", \n      k8s_namespace_name=\"$namespace\", \n      k8s_pod_name=\"$pod\", \n      app_name=~\"$app_name\", \n      app_version=~\"$app_version\", \n      region=~\"$region\", \n      cluster_id=~\"$cluster_id\", \n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "Input",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "- sum(\n  ${rate_func}(\n    k8s_pod_network_io_bytes_total{\n      direction=\"transmit\", \n      k8s_namespace_name=\"$namespace\", \n      k8s_pod_name=\"$pod\", \n      app_name=~\"$app_name\", \n      app_version=~\"$app_version\", \n      region=~\"$region\", \n      cluster_id=~\"$cluster_id\", \n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "Output",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Network I/O ",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 56
+      },
+      "id": 36,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "sum(\n  ${rate_func}(\n    k8s_pod_network_errors_total{\n      direction=\"receive\", \n      k8s_namespace_name=\"$namespace\", \n      k8s_pod_name=\"$pod\", \n      app_name=~\"$app_name\", \n      app_version=~\"$app_version\", \n      region=~\"$region\", \n      cluster_id=~\"$cluster_id\", \n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "Input",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "- sum(\n  ${rate_func}(\n    k8s_pod_network_errors_total{\n      direction=\"transmit\", \n      k8s_namespace_name=\"$namespace\", \n      k8s_pod_name=\"$pod\", \n      app_name=~\"$app_name\", \n      app_version=~\"$app_version\", \n      region=~\"$region\", \n      cluster_id=~\"$cluster_id\", \n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "Output",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Network Packets Dropped",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "refresh": "15s",
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(kube_node_info,app_name)",
+        "includeAll": true,
+        "label": "App",
+        "multi": true,
+        "name": "app_name",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(kube_node_info,app_name)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(kube_node_info{app_name=~\"$app_name\"},app_version)",
+        "includeAll": true,
+        "label": "App Version",
+        "multi": true,
+        "name": "app_version",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(kube_node_info{app_name=~\"$app_name\"},app_version)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 4,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(kube_node_info{app_name=~\"$app_name\", app_version=~\"$app_version\"},region)",
+        "includeAll": true,
+        "label": "Region",
+        "multi": true,
+        "name": "region",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(kube_node_info{app_name=~\"$app_name\", app_version=~\"$app_version\"},region)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(kube_node_info{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"},cluster_id)",
+        "includeAll": true,
+        "label": "Cluster",
+        "multi": true,
+        "name": "cluster_id",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(kube_node_info{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"},cluster_id)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(kube_node_info{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
+        "includeAll": true,
+        "label": "Environment",
+        "multi": true,
+        "name": "env",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(kube_node_info{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(kube_pod_info{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},namespace)",
+        "includeAll": false,
+        "label": "Namespace",
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(kube_pod_info{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},namespace)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(kube_pod_info{namespace=~\"$namespace\", app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},pod)",
+        "includeAll": false,
+        "label": "Pod",
+        "name": "pod",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(kube_pod_info{namespace=~\"$namespace\", app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},pod)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "rate",
+          "value": "rate"
+        },
+        "description": "This variable controls the mathematical function used to calculate per-second rates across the dashboard.\n\n    Overview (rate): Calculates the average rate over the entire time interval. Best for spotting trends, capacity planning, and long-term views.\n\n    Debug (irate): Calculates the \"instant\" rate based on the last two data points. Best for high-resolution troubleshooting and catching micro-spikes.\n\n⚠️ Warning: irate should only be used when zoomed in to < 1 hour. On longer time ranges (e.g., 7 days), irate ignores most data points between pixels and will provide a misleading representation of your traffic.",
+        "label": "Mode",
+        "name": "rate_func",
+        "options": [
+          {
+            "selected": true,
+            "text": "Overview",
+            "value": "rate"
+          },
+          {
+            "selected": false,
+            "text": "Debug",
+            "value": "irate"
+          }
+        ],
+        "query": "Overview : rate, Debug : irate",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "15s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "utc",
+  "title": "Pods",
+  "uid": "k8s_views_pods",
+  "version": 96,
+  "weekStart": ""
+}
