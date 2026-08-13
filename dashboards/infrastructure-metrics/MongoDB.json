@@ -146,7 +146,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg(\n    mongodb_instance_uptime_seconds{\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n)",
+          "expr": "avg(\n    mongodb_instance_uptime_seconds{\n        app=~\"$app\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n)",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -243,7 +243,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "(\n  sum(\n    mongodb_connections{\n        state=\"current\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n  ) \n  / \n  sum(\n    mongodb_connections{\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n  )\n)",
+          "expr": "(\n  sum(\n    mongodb_connections{\n        state=\"current\",\n        app=~\"$app\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n  ) \n  / \n  sum(\n    mongodb_connections{\n        app=~\"$app\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n  )\n)",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -335,7 +335,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n    mongodb_connections{\n        state=\"current\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n)",
+          "expr": "sum(\n    mongodb_connections{\n        state=\"current\",\n        app=~\"$app\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n)",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -424,7 +424,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max(\n    mongodb_mongod_replset_number_of_members{\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n)",
+          "expr": "max(\n    mongodb_mongod_replset_number_of_members{\n        app=~\"$app\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n)",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -539,7 +539,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (type) (\n    ${rate_func}(\n        mongodb_op_counters_total{\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            k8s_node_name=~\"$k8s_node_name\",\n            k8s_pod_name=~\"$k8s_pod_name\",\n            env=~\"$env\"\n        }[$__rate_interval]\n    )\n)",
+          "expr": "sum by (type) (\n    ${rate_func}(\n        mongodb_op_counters_total{\n            app=~\"$app\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            k8s_node_name=~\"$k8s_node_name\",\n            k8s_pod_name=~\"$k8s_pod_name\",\n            env=~\"$env\"\n        }[$__rate_interval]\n    )\n)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -639,7 +639,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum by (state) (\n    ${rate_func}(\n        mongodb_mongod_metrics_document_total{\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            k8s_node_name=~\"$k8s_node_name\",\n            k8s_pod_name=~\"$k8s_pod_name\",\n            env=~\"$env\"\n        }[$__rate_interval]\n    )\n)",
+          "expr": "sum by (state) (\n    ${rate_func}(\n        mongodb_mongod_metrics_document_total{\n            app=~\"$app\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            k8s_node_name=~\"$k8s_node_name\",\n            k8s_pod_name=~\"$k8s_pod_name\",\n            env=~\"$env\"\n        }[$__rate_interval]\n    )\n)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -755,7 +755,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum(\n  ${rate_func}(\n    mongodb_mongod_op_latencies_latency_total{\n      type=\"read\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) \n/ \nsum(\n  ${rate_func}(\n    mongodb_mongod_op_latencies_ops_total{\n      type=\"read\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) / 1000",
+          "expr": "sum(\n  ${rate_func}(\n    mongodb_mongod_op_latencies_latency_total{\n      type=\"read\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) \n/ \nsum(\n  ${rate_func}(\n    mongodb_mongod_op_latencies_ops_total{\n      type=\"read\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) / 1000",
           "format": "time_series",
           "legendFormat": "Read Latency",
           "range": true,
@@ -855,7 +855,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum(\n  ${rate_func}(\n    mongodb_mongod_op_latencies_latency_total{\n      type=\"write\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) \n/ \nsum(\n  ${rate_func}(\n    mongodb_mongod_op_latencies_ops_total{\n      type=\"write\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) / 1000",
+          "expr": "sum(\n  ${rate_func}(\n    mongodb_mongod_op_latencies_latency_total{\n      type=\"write\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) \n/ \nsum(\n  ${rate_func}(\n    mongodb_mongod_op_latencies_ops_total{\n      type=\"write\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) / 1000",
           "format": "time_series",
           "legendFormat": "Write Latency",
           "range": true,
@@ -1000,7 +1000,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max by (member_idx, member_state) (\n    mongodb_rs_members_state{\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n)",
+          "expr": "max by (member_idx, member_state) (\n    mongodb_rs_members_state{\n        app=~\"$app\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1134,7 +1134,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "avg by (type) (\n    mongodb_memory{\n        type=~\"resident|virtual\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n)",
+          "expr": "avg by (type) (\n    mongodb_memory{\n        type=~\"resident|virtual\",\n        app=~\"$app\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        k8s_node_name=~\"$k8s_node_name\",\n        k8s_pod_name=~\"$k8s_pod_name\",\n        env=~\"$env\"\n    }\n)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1240,7 +1240,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum(\n  ${rate_func}(\n    mongodb_ss_network_bytesIn{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "expr": "sum(\n  ${rate_func}(\n    mongodb_ss_network_bytesIn{\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -1256,7 +1256,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "- sum(\n  ${rate_func}(\n    mongodb_ss_network_bytesOut{\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\",\n    }[$__rate_interval]\n  )\n)",
+          "expr": "- sum(\n  ${rate_func}(\n    mongodb_ss_network_bytesOut{\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      k8s_node_name=~\"$k8s_node_name\",\n      k8s_pod_name=~\"$k8s_pod_name\",\n      env=~\"$env\"}[$__rate_interval]\n  )\n)",
           "format": "time_series",
           "hide": false,
           "legendFormat": "Output",
@@ -1371,7 +1371,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "max(\n    ${rate_func}(\n        mongodb_mongod_replset_oplog_head_timestamp{\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            k8s_node_name=~\"$k8s_node_name\",\n            k8s_pod_name=~\"$k8s_pod_name\",\n            env=~\"$env\"\n        }[$__rate_interval]\n    )\n)",
+          "expr": "max(\n    ${rate_func}(\n        mongodb_mongod_replset_oplog_head_timestamp{\n            app=~\"$app\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            k8s_node_name=~\"$k8s_node_name\",\n            k8s_pod_name=~\"$k8s_pod_name\",\n            env=~\"$env\"\n        }[$__rate_interval]\n    )\n)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1398,22 +1398,23 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(mongodb_connections,app_name)",
+        "definition": "label_values(mongodb_connections,app)",
         "description": "",
         "includeAll": true,
         "label": "App",
         "multi": true,
-        "name": "app_name",
+        "name": "app",
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(mongodb_connections,app_name)",
+          "query": "label_values(mongodb_connections,app)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
         "sort": 1,
-        "type": "query"
+        "type": "query",
+        "allValue": ".*"
       },
       {
         "current": {},
@@ -1421,35 +1422,13 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(mongodb_connections{app_name=~\"$app_name\"},app_version)",
-        "includeAll": true,
-        "label": "App Version",
-        "multi": true,
-        "name": "app_version",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(mongodb_connections{app_name=~\"$app_name\"},app_version)",
-          "refId": "VariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "sort": 4,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "victoriametrics-metrics-datasource",
-          "uid": "${DS_VICTORIAMETRICS}"
-        },
-        "definition": "label_values(mongodb_connections{app_name=~\"$app_name\", app_version=~\"$app_version\"}, region)",
+        "definition": "label_values(mongodb_connections{app=~\"$app\"}, region)",
         "includeAll": true,
         "label": "Region",
         "multi": true,
         "name": "region",
         "options": [],
-        "query": "label_values(mongodb_connections{app_name=~\"$app_name\", app_version=~\"$app_version\"}, region)",
+        "query": "label_values(mongodb_connections{app=~\"$app\"}, region)",
         "refresh": 1,
         "regex": "",
         "sort": 1,
@@ -1461,13 +1440,13 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(mongodb_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"}, cluster_id)",
+        "definition": "label_values(mongodb_connections{app=~\"$app\", region=~\"$region\"}, cluster_id)",
         "includeAll": true,
         "label": "Cluster",
         "multi": true,
         "name": "cluster_id",
         "options": [],
-        "query": "label_values(mongodb_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"}, cluster_id)",
+        "query": "label_values(mongodb_connections{app=~\"$app\", region=~\"$region\"}, cluster_id)",
         "refresh": 1,
         "regex": "",
         "sort": 1,
@@ -1479,7 +1458,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(mongodb_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},k8s_node_name)",
+        "definition": "label_values(mongodb_connections{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\"},k8s_node_name)",
         "includeAll": true,
         "label": "Node",
         "multi": true,
@@ -1487,7 +1466,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(mongodb_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},k8s_node_name)",
+          "query": "label_values(mongodb_connections{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\"},k8s_node_name)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1501,7 +1480,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(mongodb_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\"},k8s_pod_name)",
+        "definition": "label_values(mongodb_connections{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\"},k8s_pod_name)",
         "includeAll": true,
         "label": "Pod",
         "multi": true,
@@ -1509,7 +1488,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(mongodb_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\"},k8s_pod_name)",
+          "query": "label_values(mongodb_connections{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\"},k8s_pod_name)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1523,7 +1502,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(mongodb_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\", k8s_pod_name=~\"$k8s_pod_name\"},env)",
+        "definition": "label_values(mongodb_connections{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\", k8s_pod_name=~\"$k8s_pod_name\"},env)",
         "includeAll": true,
         "label": "Environment",
         "multi": true,
@@ -1531,7 +1510,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(mongodb_connections{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\", k8s_pod_name=~\"$k8s_pod_name\"},env)",
+          "query": "label_values(mongodb_connections{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\", k8s_node_name=~\"$k8s_node_name\", k8s_pod_name=~\"$k8s_pod_name\"},env)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1544,7 +1523,7 @@
           "text": "rate",
           "value": "rate"
         },
-        "description": "This variable controls the mathematical function used to calculate per-second rates across the dashboard.\n\n    Overview (rate): Calculates the average rate over the entire time interval. Best for spotting trends, capacity planning, and long-term views.\n\n    Debug (irate): Calculates the \"instant\" rate based on the last two data points. Best for high-resolution troubleshooting and catching micro-spikes.\n\n⚠️ Warning: irate should only be used when zoomed in to < 1 hour. On longer time ranges (e.g., 7 days), irate ignores most data points between pixels and will provide a misleading representation of your traffic.",
+        "description": "This variable controls the mathematical function used to calculate per-second rates across the dashboard.\n\n    Overview (rate): Calculates the average rate over the entire time interval. Best for spotting trends, capacity planning, and long-term views.\n\n    Debug (irate): Calculates the \"instant\" rate based on the last two data points. Best for high-resolution troubleshooting and catching micro-spikes.\n\n\u26a0\ufe0f Warning: irate should only be used when zoomed in to < 1 hour. On longer time ranges (e.g., 7 days), irate ignores most data points between pixels and will provide a misleading representation of your traffic.",
         "label": "Mode",
         "name": "rate_func",
         "options": [
@@ -1586,6 +1565,6 @@
   "timezone": "utc",
   "title": "MongoDB",
   "uid": "TS6jqDvfhnPgZeL",
-  "version": 31,
+  "version": 33,
   "weekStart": ""
 }

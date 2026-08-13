@@ -1,14 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_OPENOBSERVE",
-      "label": "OpenObserve",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "grafana-openobserve-datasource",
-      "pluginName": "OpenObserve"
-    }
-  ],
   "__elements": {},
   "__requires": [
     {
@@ -74,7 +64,7 @@
     {
       "datasource": {
         "type": "grafana-openobserve-datasource",
-        "uid": "${DS_OPENOBSERVE}"
+        "uid": "openobserve"
       },
       "gridPos": {
         "h": 16,
@@ -101,13 +91,13 @@
         {
           "datasource": {
             "type": "grafana-openobserve-datasource",
-            "uid": "${DS_OPENOBSERVE}"
+            "uid": "openobserve"
           },
           "editorMode": "code",
           "format": 1,
-          "query": "SELECT * FROM services WHERE time_range(_timestamp, '${__from:date:iso}', '${__to:date:iso}') AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) AND cell_id IN ([[cell_id:singlequote]]) AND k8s_node_name IN ([[k8s_node_name:singlequote]]) AND k8s_pod_name IN ([[k8s_pod_name:singlequote]]) AND env IN ([[env:singlequote]]) AND severity IN ([[severity:singlequote]]) AND body LIKE '%$search_term%' ORDER BY _timestamp DESC LIMIT 1000",
+          "query": "SELECT * FROM ${app} WHERE time_range(_timestamp, '${__from:date:iso}', '${__to:date:iso}') AND ( ('${trace_id:text}' != '' AND (trace_id = '${trace_id:text}' OR trace_id = lower('${trace_id:text}'))) OR ('${trace_id:text}' = '' AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) AND k8s_node_name IN ([[k8s_node_name:singlequote]]) AND k8s_pod_name IN ([[k8s_pod_name:singlequote]]) AND env IN ([[env:singlequote]]) AND severity IN ([[severity:singlequote]]) AND body LIKE '%$search_term%' ) ) ORDER BY _timestamp DESC LIMIT ${limit}",
           "rawQuery": true,
-          "rawSql": "SELECT *\nFROM services\nWHERE time_range(_timestamp, '${__from:date:iso}', '${__to:date:iso}')\n  AND (\n    (length('${trace_id:text}') > 0 AND trace_id = '${trace_id:text}')\n    OR\n    (length('${trace_id:text}') = 0\n      AND app_name IN ([[app_name:singlequote]])\n      AND app_version IN ([[app_version:singlequote]])\n      AND service_name IN ([[service_name:singlequote]])\n      AND service_version IN ([[service_version:singlequote]])\n      AND region IN ([[region:singlequote]])\n      AND cluster_id IN ([[cluster_id:singlequote]])\n      AND k8s_node_name IN ([[k8s_node_name:singlequote]])\n      AND k8s_pod_name IN ([[k8s_pod_name:singlequote]])\n      AND env IN ([[env:singlequote]])\n      AND severity IN ([[severity:singlequote]])\n      AND body LIKE '%$search_term%'\n    )\n  )\nORDER BY _timestamp DESC\nLIMIT ${limit}",
+          "rawSql": "SELECT *\nFROM ${app}\nWHERE time_range(_timestamp, '${__from:date:iso}', '${__to:date:iso}')\n  AND (\n    ('${trace_id:text}' != '' AND (trace_id = '${trace_id:text}' OR trace_id = lower('${trace_id:text}')))\n    OR\n    ('${trace_id:text}' = ''\n      AND region IN ([[region:singlequote]])\n      AND cluster_id IN ([[cluster_id:singlequote]])\n      AND k8s_node_name IN ([[k8s_node_name:singlequote]])\n      AND k8s_pod_name IN ([[k8s_pod_name:singlequote]])\n      AND env IN ([[env:singlequote]])\n      AND severity IN ([[severity:singlequote]])\n      AND body LIKE '%$search_term%'\n    )\n  )\nORDER BY _timestamp DESC\nLIMIT ${limit}",
           "refId": "A",
           "sql": {
             "columns": [
@@ -126,7 +116,9 @@
             ],
             "limit": 50
           },
-          "sqlMode": true
+          "sqlMode": true,
+          "queryType": "logs",
+          "enableSSE": false
         }
       ],
       "title": "Logs",
@@ -136,7 +128,7 @@
     {
       "datasource": {
         "type": "grafana-openobserve-datasource",
-        "uid": "${DS_OPENOBSERVE}"
+        "uid": "openobserve"
       },
       "description": "This datasource does not support full-range histograms. The graph below is based on the logs seen in the response limit.",
       "fieldConfig": {
@@ -254,13 +246,13 @@
         {
           "datasource": {
             "type": "grafana-openobserve-datasource",
-            "uid": "${DS_OPENOBSERVE}"
+            "uid": "openobserve"
           },
           "editorMode": "code",
           "format": 1,
-          "query": "SELECT histogram(_timestamp) as time, severity, count(*) FROM services WHERE time_range(_timestamp, '${__from:date:iso}', '${__to:date:iso}') AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) AND cell_id IN ([[cell_id:singlequote]]) AND k8s_node_name IN ([[k8s_node_name:singlequote]]) AND k8s_pod_name IN ([[k8s_pod_name:singlequote]]) AND env IN ([[env:singlequote]]) AND severity IN ([[severity:singlequote]]) AND body LIKE '%$search_term%' GROUP BY time, severity ORDER BY time ASC",
+          "query": "SELECT histogram(_timestamp) as time, severity, count(*) FROM ${app} WHERE time_range(_timestamp, '${__from:date:iso}', '${__to:date:iso}') AND ( ('${trace_id:text}' != '' AND (trace_id = '${trace_id:text}' OR trace_id = lower('${trace_id:text}'))) OR ('${trace_id:text}' = '' AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) AND k8s_node_name IN ([[k8s_node_name:singlequote]]) AND k8s_pod_name IN ([[k8s_pod_name:singlequote]]) AND env IN ([[env:singlequote]]) AND severity IN ([[severity:singlequote]]) AND body LIKE '%$search_term%' ) ) GROUP BY time, severity ORDER BY time ASC",
           "rawQuery": true,
-          "rawSql": "SELECT histogram(_timestamp) as time, severity, count(*)\nFROM services\nWHERE time_range(_timestamp, '${__from:date:iso}', '${__to:date:iso}')\n  AND app_name IN ([[app_name:singlequote]])\n  AND app_version IN ([[app_version:singlequote]])\n  AND service_name IN ([[service_name:singlequote]])\n  AND service_version IN ([[service_version:singlequote]])\n  AND region IN ([[region:singlequote]])\n  AND cluster_id IN ([[cluster_id:singlequote]])\n  AND k8s_node_name IN ([[k8s_node_name:singlequote]])\n  AND k8s_pod_name IN ([[k8s_pod_name:singlequote]])\n  AND env IN ([[env:singlequote]])\n  AND severity IN ([[severity:singlequote]])\n  AND body LIKE '%$search_term%'\nGROUP BY time, severity\nORDER BY time ASC",
+          "rawSql": "SELECT histogram(_timestamp) as time, severity, count(*)\nFROM ${app}\nWHERE time_range(_timestamp, '${__from:date:iso}', '${__to:date:iso}')\n  AND (\n    ('${trace_id:text}' != '' AND (trace_id = '${trace_id:text}' OR trace_id = lower('${trace_id:text}')))\n    OR\n    ('${trace_id:text}' = ''\n      AND region IN ([[region:singlequote]])\n      AND cluster_id IN ([[cluster_id:singlequote]])\n      AND k8s_node_name IN ([[k8s_node_name:singlequote]])\n      AND k8s_pod_name IN ([[k8s_pod_name:singlequote]])\n      AND env IN ([[env:singlequote]])\n      AND severity IN ([[severity:singlequote]])\n      AND body LIKE '%$search_term%'\n    )\n  )\nGROUP BY time, severity\nORDER BY time ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -279,7 +271,9 @@
             ],
             "limit": 50
           },
-          "sqlMode": true
+          "sqlMode": true,
+          "queryType": "logs",
+          "enableSSE": false
         }
       ],
       "title": "Logs Volume",
@@ -315,20 +309,46 @@
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "grafana-openobserve-datasource",
-          "uid": "${DS_OPENOBSERVE}"
+          "uid": "openobserve"
         },
-        "definition": "",
+        "definition": "\\dt logs",
+        "description": "OpenObserve log streams (blank names filtered out).",
         "includeAll": true,
-        "label": "App Name",
-        "multi": true,
-        "name": "app_name",
+        "label": "App",
+        "multi": false,
+        "name": "app",
         "options": [],
         "query": {
           "rawQuery": true,
-          "rawSql": "SELECT app_name FROM services GROUP BY app_name"
+          "rawSql": "\\dt logs"
+        },
+        "refresh": 1,
+        "regex": "/\\S+/",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "grafana-openobserve-datasource",
+          "uid": "openobserve"
+        },
+        "definition": "SELECT region FROM ${app} GROUP BY region",
+        "includeAll": true,
+        "label": "Region",
+        "multi": true,
+        "name": "region",
+        "options": [],
+        "query": {
+          "rawQuery": true,
+          "rawSql": "SELECT region FROM ${app} GROUP BY region"
         },
         "refresh": 1,
         "regex": "",
@@ -339,17 +359,17 @@
         "current": {},
         "datasource": {
           "type": "grafana-openobserve-datasource",
-          "uid": "${DS_OPENOBSERVE}"
+          "uid": "openobserve"
         },
-        "definition": "SELECT app_version FROM services WHERE app_name IN ([[app_name:singlequote]]) GROUP BY app_version",
+        "definition": "SELECT cluster_id FROM ${app} GROUP BY cluster_id",
         "includeAll": true,
-        "label": "App Version",
+        "label": "Cluster",
         "multi": true,
-        "name": "app_version",
+        "name": "cluster_id",
         "options": [],
         "query": {
           "rawQuery": true,
-          "rawSql": "SELECT app_version FROM services WHERE app_name IN ([[app_name:singlequote]]) GROUP BY app_version"
+          "rawSql": "SELECT cluster_id FROM ${app} GROUP BY cluster_id"
         },
         "refresh": 1,
         "regex": "",
@@ -360,93 +380,9 @@
         "current": {},
         "datasource": {
           "type": "grafana-openobserve-datasource",
-          "uid": "${DS_OPENOBSERVE}"
+          "uid": "openobserve"
         },
-        "definition": "SELECT service_name FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) GROUP BY service_name",
-        "includeAll": true,
-        "label": "Service",
-        "multi": true,
-        "name": "service_name",
-        "options": [],
-        "query": {
-          "rawQuery": true,
-          "rawSql": "SELECT service_name FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) GROUP BY service_name"
-        },
-        "refresh": 1,
-        "regex": "",
-        "sort": 3,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "grafana-openobserve-datasource",
-          "uid": "${DS_OPENOBSERVE}"
-        },
-        "definition": "SELECT service_version FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) GROUP BY service_version",
-        "includeAll": true,
-        "label": "Service Version",
-        "multi": true,
-        "name": "service_version",
-        "options": [],
-        "query": {
-          "rawQuery": true,
-          "rawSql": "SELECT service_version FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) GROUP BY service_version"
-        },
-        "refresh": 1,
-        "regex": "",
-        "sort": 4,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "grafana-openobserve-datasource",
-          "uid": "${DS_OPENOBSERVE}"
-        },
-        "definition": "SELECT region FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) GROUP BY region",
-        "includeAll": true,
-        "label": "Region",
-        "multi": true,
-        "name": "region",
-        "options": [],
-        "query": {
-          "rawQuery": true,
-          "rawSql": "SELECT region FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) GROUP BY region"
-        },
-        "refresh": 1,
-        "regex": "",
-        "sort": 5,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "grafana-openobserve-datasource",
-          "uid": "${DS_OPENOBSERVE}"
-        },
-        "definition": "SELECT cluster_id FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) GROUP BY cluster_id",
-        "includeAll": true,
-        "label": "Cluster",
-        "multi": true,
-        "name": "cluster_id",
-        "options": [],
-        "query": {
-          "rawQuery": true,
-          "rawSql": "SELECT cluster_id FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) GROUP BY cluster_id"
-        },
-        "refresh": 1,
-        "regex": "",
-        "sort": 6,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "grafana-openobserve-datasource",
-          "uid": "${DS_OPENOBSERVE}"
-        },
-        "definition": "SELECT k8s_node_name FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) GROUP BY k8s_node_name",
+        "definition": "SELECT k8s_node_name FROM ${app} GROUP BY k8s_node_name",
         "includeAll": true,
         "label": "Node",
         "multi": true,
@@ -454,20 +390,20 @@
         "options": [],
         "query": {
           "rawQuery": true,
-          "rawSql": "SELECT k8s_node_name FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) GROUP BY k8s_node_name"
+          "rawSql": "SELECT k8s_node_name FROM ${app} GROUP BY k8s_node_name"
         },
         "refresh": 1,
         "regex": "",
-        "sort": 7,
+        "sort": 1,
         "type": "query"
       },
       {
         "current": {},
         "datasource": {
           "type": "grafana-openobserve-datasource",
-          "uid": "${DS_OPENOBSERVE}"
+          "uid": "openobserve"
         },
-        "definition": "SELECT k8s_pod_name FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) AND k8s_node_name IN ([[k8s_node_name:singlequote]]) GROUP BY k8s_pod_name",
+        "definition": "SELECT k8s_pod_name FROM ${app} GROUP BY k8s_pod_name",
         "includeAll": true,
         "label": "Pod",
         "multi": true,
@@ -475,41 +411,41 @@
         "options": [],
         "query": {
           "rawQuery": true,
-          "rawSql": "SELECT k8s_pod_name FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) AND k8s_node_name IN ([[k8s_node_name:singlequote]]) GROUP BY k8s_pod_name"
+          "rawSql": "SELECT k8s_pod_name FROM ${app} GROUP BY k8s_pod_name"
         },
         "refresh": 1,
         "regex": "",
-        "sort": 8,
+        "sort": 1,
         "type": "query"
       },
       {
         "current": {},
         "datasource": {
           "type": "grafana-openobserve-datasource",
-          "uid": "${DS_OPENOBSERVE}"
+          "uid": "openobserve"
         },
-        "definition": "SELECT env FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) AND k8s_node_name IN ([[k8s_node_name:singlequote]]) AND k8s_pod_name IN ([[k8s_pod_name:singlequote]]) GROUP BY env",
+        "definition": "SELECT env FROM ${app} GROUP BY env",
         "includeAll": true,
-        "label": "Environment",
+        "label": "Env",
         "multi": true,
         "name": "env",
         "options": [],
         "query": {
           "rawQuery": true,
-          "rawSql": "SELECT env FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) AND k8s_node_name IN ([[k8s_node_name:singlequote]]) AND k8s_pod_name IN ([[k8s_pod_name:singlequote]]) GROUP BY env"
+          "rawSql": "SELECT env FROM ${app} GROUP BY env"
         },
         "refresh": 1,
         "regex": "",
-        "sort": 9,
+        "sort": 1,
         "type": "query"
       },
       {
         "current": {},
         "datasource": {
           "type": "grafana-openobserve-datasource",
-          "uid": "${DS_OPENOBSERVE}"
+          "uid": "openobserve"
         },
-        "definition": "SELECT severity FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) AND k8s_node_name IN ([[k8s_node_name:singlequote]]) AND k8s_pod_name IN ([[k8s_pod_name:singlequote]]) AND env IN ([[env:singlequote]]) GROUP BY severity",
+        "definition": "SELECT severity FROM ${app} GROUP BY severity",
         "includeAll": true,
         "label": "Severity",
         "multi": true,
@@ -517,11 +453,11 @@
         "options": [],
         "query": {
           "rawQuery": true,
-          "rawSql": "SELECT severity FROM services WHERE app_name IN ([[app_name:singlequote]]) AND app_version IN ([[app_version:singlequote]]) AND service_name IN ([[service_name:singlequote]]) AND service_version IN ([[service_version:singlequote]]) AND region IN ([[region:singlequote]]) AND cluster_id IN ([[cluster_id:singlequote]]) AND k8s_node_name IN ([[k8s_node_name:singlequote]]) AND k8s_pod_name IN ([[k8s_pod_name:singlequote]]) AND env IN ([[env:singlequote]]) GROUP BY severity"
+          "rawSql": "SELECT severity FROM ${app} GROUP BY severity"
         },
         "refresh": 1,
         "regex": "",
-        "sort": 10,
+        "sort": 1,
         "type": "query"
       },
       {
@@ -539,7 +475,8 @@
           }
         ],
         "query": "",
-        "type": "textbox"
+        "type": "textbox",
+        "description": "Matches field trace_id. When set, other filters are ignored."
       },
       {
         "current": {
@@ -599,6 +536,6 @@
   "timezone": "utc",
   "title": "Logs",
   "uid": "0VGCw7OR21Y9yAb",
-  "version": 13,
+  "version": 30,
   "weekStart": ""
 }

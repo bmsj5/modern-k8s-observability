@@ -140,7 +140,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "count(\n  traefik_config_reloads_total{\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n)",
+          "expr": "count(\n  traefik_config_reloads_total{\n    app=~\"$app\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }\n)",
           "format": "time_series",
           "instant": true,
           "legendFormat": "__auto",
@@ -245,7 +245,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum(\n  ${rate_func}(\n    traefik_entrypoint_requests_total{\n      entrypoint=~\"$entrypoint\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (entrypoint)",
+          "expr": "sum(\n  ${rate_func}(\n    traefik_entrypoint_requests_total{\n      entrypoint=~\"$entrypoint\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (entrypoint)",
           "format": "time_series",
           "legendFormat": "{{entrypoint}}",
           "range": true,
@@ -347,7 +347,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "(\n  sum(\n    ${rate_func}(\n      traefik_entrypoint_request_duration_seconds_bucket{\n        le=\"0.3\",\n        code=\"200\",\n        entrypoint=~\"$entrypoint\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      }[$__rate_interval]\n    )\n  ) by (method) +\n  sum(\n    ${rate_func}(\n      traefik_entrypoint_request_duration_seconds_bucket{\n        le=\"1.2\",\n        code=\"200\",\n        entrypoint=~\"$entrypoint\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      }[$__rate_interval]\n    )\n  ) by (method)\n) / 2 /\n(\n  sum(\n    ${rate_func}(\n      traefik_entrypoint_request_duration_seconds_count{\n        code=\"200\",\n        entrypoint=~\"$entrypoint\",\n        app_name=~\"$app_name\",\n        app_version=~\"$app_version\",\n        region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      }[$__rate_interval]\n    )\n  ) by (method)\n)",
+          "expr": "(\n  sum(\n    ${rate_func}(\n      traefik_entrypoint_request_duration_seconds_bucket{\n        le=\"0.3\",\n        code=\"200\",\n        entrypoint=~\"$entrypoint\",\n        app=~\"$app\",\n      region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      }[$__rate_interval]\n    )\n  ) by (method) +\n  sum(\n    ${rate_func}(\n      traefik_entrypoint_request_duration_seconds_bucket{\n        le=\"1.2\",\n        code=\"200\",\n        entrypoint=~\"$entrypoint\",\n        app=~\"$app\",\n      region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      }[$__rate_interval]\n    )\n  ) by (method)\n) / 2 /\n(\n  sum(\n    ${rate_func}(\n      traefik_entrypoint_request_duration_seconds_count{\n        code=\"200\",\n        entrypoint=~\"$entrypoint\",\n        app=~\"$app\",\n      region=~\"$region\",\n        cluster_id=~\"$cluster_id\",\n        env=~\"$env\"\n      }[$__rate_interval]\n    )\n  ) by (method)\n)",
           "format": "time_series",
           "legendFormat": "{{method}}",
           "range": true,
@@ -419,7 +419,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum(\n  ${rate_func}(\n    traefik_service_requests_total{\n      service=~\"$service.*\",\n      protocol=\"http\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (method, code)",
+          "expr": "sum(\n  ${rate_func}(\n    traefik_service_requests_total{\n      service=~\"$service\",\n      protocol=~\"$protocol\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (method, code)",
           "format": "time_series",
           "legendFormat": "{{method}}[{{code}}]",
           "range": true,
@@ -522,7 +522,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "topk(\n  15,\n  label_replace(\n    traefik_service_request_duration_seconds_sum{\n      service=~\"$service.*\",\n      protocol=\"http\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } /\n    traefik_service_request_duration_seconds_count{\n      service=~\"$service.*\",\n      protocol=\"http\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    },\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "expr": "topk(\n  15,\n  label_replace(\n    traefik_service_request_duration_seconds_sum{\n      service=~\"$service\",\n      protocol=~\"$protocol\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    } /\n    traefik_service_request_duration_seconds_count{\n      service=~\"$service\",\n      protocol=~\"$protocol\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    },\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
           "format": "time_series",
           "legendFormat": "{{method}}[{{code}}] on {{service}}",
           "range": true,
@@ -625,7 +625,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service.*\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service\",\n            protocol=~\"$protocol\",\n            app=~\"$app\",\n      region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
           "format": "time_series",
           "legendFormat": "[{{code}}] on {{service}}",
           "range": true,
@@ -755,7 +755,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "label_replace(\n  1 - (\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_bucket{\n          le=\"1.2\",\n          service=~\"$service.*\",\n          app_name=~\"$app_name\",\n          app_version=~\"$app_version\",\n          region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    ) /\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_count{\n          service=~\"$service.*\",\n          app_name=~\"$app_name\",\n          app_version=~\"$app_version\",\n          region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    )\n  ) > 0,\n  \"service\",\n  \"$1\",\n  \"service\",\n  \"([^@]+)@.*\"\n)",
+          "expr": "label_replace(\n  1 - (\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_bucket{\n          le=\"1.2\",\n          service=~\"$service\",\n          app=~\"$app\",\n      region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    ) /\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_count{\n          service=~\"$service\",\n          app=~\"$app\",\n      region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    )\n  ) > 0,\n  \"service\",\n  \"$1\",\n  \"service\",\n  \"([^@]+)@.*\"\n)",
           "format": "time_series",
           "legendFormat": "{{service}}",
           "range": true,
@@ -871,7 +871,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "label_replace(\n  1 - (\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_bucket{\n          le=\"0.3\",\n          service=~\"$service.*\",\n          app_name=~\"$app_name\",\n          app_version=~\"$app_version\",\n          region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    ) /\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_count{\n          service=~\"$service.*\",\n          app_name=~\"$app_name\",\n          app_version=~\"$app_version\",\n          region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    )\n  ) > 0,\n  \"service\",\n  \"$1\",\n  \"service\",\n  \"([^@]+)@.*\"\n)",
+          "expr": "label_replace(\n  1 - (\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_bucket{\n          le=\"0.3\",\n          service=~\"$service\",\n          app=~\"$app\",\n      region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    ) /\n    sum by (service) (\n      ${rate_func}(\n        traefik_service_request_duration_seconds_count{\n          service=~\"$service\",\n          app=~\"$app\",\n      region=~\"$region\",\n          cluster_id=~\"$cluster_id\",\n          env=~\"$env\"\n        }[$__rate_interval]\n      )\n    )\n  ) > 0,\n  \"service\",\n  \"$1\",\n  \"service\",\n  \"([^@]+)@.*\"\n)",
           "format": "time_series",
           "legendFormat": "{{service}}",
           "range": true,
@@ -987,7 +987,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service.*\",\n            code=~\"2..\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service\",\n            code=~\"2..\",\n            protocol=~\"$protocol\",\n            app=~\"$app\",\n      region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
           "format": "time_series",
           "legendFormat": "{{method}}[{{code}}] on {{service}}",
           "range": true,
@@ -1091,7 +1091,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service.*\",\n            code=~\"5..\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service\",\n            code=~\"5..\",\n            protocol=~\"$protocol\",\n            app=~\"$app\",\n      region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
           "format": "time_series",
           "legendFormat": "{{method}}[{{code}}] on {{service}}",
           "range": true,
@@ -1195,7 +1195,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service.*\",\n            code!~\"2..|5..\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method, code) (\n        ${rate_func}(\n          traefik_service_requests_total{\n            service=~\"$service\",\n            code!~\"2..|5..\",\n            protocol=~\"$protocol\",\n            app=~\"$app\",\n      region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
           "format": "time_series",
           "legendFormat": "{{method}}[{{code}}] on {{service}}",
           "range": true,
@@ -1299,7 +1299,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method) (\n        ${rate_func}(\n          traefik_service_requests_bytes_total{\n            service=~\"$service.*\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method) (\n        ${rate_func}(\n          traefik_service_requests_bytes_total{\n            service=~\"$service\",\n            protocol=~\"$protocol\",\n            app=~\"$app\",\n      region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
           "format": "time_series",
           "legendFormat": "{{method}} on {{service}}",
           "range": true,
@@ -1403,7 +1403,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method) (\n        ${rate_func}(\n          traefik_service_responses_bytes_total{\n            service=~\"$service.*\",\n            protocol=\"http\",\n            app_name=~\"$app_name\",\n            app_version=~\"$app_version\",\n            region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
+          "expr": "topk(\n  15,\n  label_replace(\n    (\n      sum by (service, method) (\n        ${rate_func}(\n          traefik_service_responses_bytes_total{\n            service=~\"$service\",\n            protocol=~\"$protocol\",\n            app=~\"$app\",\n      region=~\"$region\",\n            cluster_id=~\"$cluster_id\",\n            env=~\"$env\"\n          }[$__rate_interval]\n        )\n      ) > 0\n    ),\n    \"service\",\n    \"$1\",\n    \"service\",\n    \"([^@]+)@.*\"\n  )\n)",
           "format": "time_series",
           "legendFormat": "{{method}} on {{service}}",
           "range": true,
@@ -1426,21 +1426,22 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(traefik_service_requests_total,app_name)",
+        "definition": "label_values(traefik_service_requests_total,app)",
         "includeAll": true,
         "label": "App",
         "multi": true,
-        "name": "app_name",
+        "name": "app",
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(traefik_service_requests_total,app_name)",
+          "query": "label_values(traefik_service_requests_total,app)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
         "sort": 1,
-        "type": "query"
+        "type": "query",
+        "allValue": ".*"
       },
       {
         "current": {},
@@ -1448,29 +1449,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(traefik_service_requests_total{app_name=~\"$app_name\"},app_version)",
-        "includeAll": true,
-        "label": "App Version",
-        "multi": true,
-        "name": "app_version",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(traefik_service_requests_total{app_name=~\"$app_name\"},app_version)",
-          "refId": "VariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "sort": 4,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "victoriametrics-metrics-datasource",
-          "uid": "${DS_VICTORIAMETRICS}"
-        },
-        "definition": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\"},region)",
+        "definition": "label_values(traefik_service_requests_total{app=~\"$app\"},region)",
         "includeAll": true,
         "label": "Region",
         "multi": true,
@@ -1478,13 +1457,14 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\"},region)",
+          "query": "label_values(traefik_service_requests_total{app=~\"$app\"},region)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
         "sort": 1,
-        "type": "query"
+        "type": "query",
+        "allValue": ".*"
       },
       {
         "current": {},
@@ -1492,7 +1472,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"},cluster_id)",
+        "definition": "label_values(traefik_service_requests_total{app=~\"$app\", region=~\"$region\"},cluster_id)",
         "includeAll": true,
         "label": "Cluster",
         "multi": true,
@@ -1500,13 +1480,14 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"},cluster_id)",
+          "query": "label_values(traefik_service_requests_total{app=~\"$app\", region=~\"$region\"},cluster_id)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
         "sort": 1,
-        "type": "query"
+        "type": "query",
+        "allValue": ".*"
       },
       {
         "current": {},
@@ -1514,7 +1495,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
+        "definition": "label_values(traefik_service_requests_total{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
         "includeAll": true,
         "label": "Environment",
         "multi": true,
@@ -1522,13 +1503,14 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
+          "query": "label_values(traefik_service_requests_total{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
         "sort": 1,
-        "type": "query"
+        "type": "query",
+        "allValue": ".*"
       },
       {
         "current": {},
@@ -1536,7 +1518,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(traefik_entrypoint_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},entrypoint)",
+        "definition": "label_values(traefik_entrypoint_requests_total{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},entrypoint)",
         "includeAll": true,
         "label": "Entrypoint",
         "multi": true,
@@ -1544,13 +1526,14 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(traefik_entrypoint_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},entrypoint)",
+          "query": "label_values(traefik_entrypoint_requests_total{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},entrypoint)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
         "sort": 1,
-        "type": "query"
+        "type": "query",
+        "allValue": ".*"
       },
       {
         "current": {},
@@ -1558,7 +1541,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},service)",
+        "definition": "label_values(traefik_service_requests_total{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},service)",
         "includeAll": true,
         "label": "Service",
         "multi": true,
@@ -1566,20 +1549,45 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(traefik_service_requests_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},service)",
+          "query": "label_values(traefik_service_requests_total{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},service)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 2,
-        "regex": "/([^@]+)@.*/",
+        "regex": "",
         "sort": 1,
-        "type": "query"
+        "type": "query",
+        "allValue": ".*",
+        "description": "Full Traefik service id (name@provider). All => .*"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(traefik_service_requests_total{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},protocol)",
+        "includeAll": true,
+        "label": "Protocol",
+        "multi": true,
+        "name": "protocol",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(traefik_service_requests_total{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\", env=~\"$env\"},protocol)",
+          "refId": "VariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query",
+        "allValue": ".*"
       },
       {
         "current": {
           "text": "rate",
           "value": "rate"
         },
-        "description": "This variable controls the mathematical function used to calculate per-second rates across the dashboard.\n\n    Overview (rate): Calculates the average rate over the entire time interval. Best for spotting trends, capacity planning, and long-term views.\n\n    Debug (irate): Calculates the \"instant\" rate based on the last two data points. Best for high-resolution troubleshooting and catching micro-spikes.\n\n⚠️ Warning: irate should only be used when zoomed in to < 1 hour. On longer time ranges (e.g., 7 days), irate ignores most data points between pixels and will provide a misleading representation of your traffic.",
+        "description": "This variable controls the mathematical function used to calculate per-second rates across the dashboard.\n\n    Overview (rate): Calculates the average rate over the entire time interval. Best for spotting trends, capacity planning, and long-term views.\n\n    Debug (irate): Calculates the \"instant\" rate based on the last two data points. Best for high-resolution troubleshooting and catching micro-spikes.\n\n\u26a0\ufe0f Warning: irate should only be used when zoomed in to < 1 hour. On longer time ranges (e.g., 7 days), irate ignores most data points between pixels and will provide a misleading representation of your traffic.",
         "label": "Mode",
         "name": "rate_func",
         "options": [
@@ -1621,6 +1629,6 @@
   "timezone": "utc",
   "title": "Traefik",
   "uid": "TYx5G24pq3d0Tw6",
-  "version": 40,
+  "version": 45,
   "weekStart": ""
 }

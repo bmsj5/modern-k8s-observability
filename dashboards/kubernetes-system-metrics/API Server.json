@@ -140,7 +140,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "up{\n  job=\"kubernetes-apiserver\",\n  app_name=~\"$app_name\",\n  app_version=~\"$app_version\",\n  region=~\"$region\",\n  cluster_id=~\"$cluster_id\",\n  env=~\"$env\"\n}",
+          "expr": "up{\n  job=\"kubernetes-apiserver\",\n  app=~\"$app\",\n  region=~\"$region\",\n  cluster_id=~\"$cluster_id\",\n  env=~\"$env\"\n}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -245,7 +245,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (code) (\n  ${rate_func}(\n    apiserver_request_total{\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "expr": "sum by (code) (\n  ${rate_func}(\n    apiserver_request_total{\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ code }}",
@@ -329,7 +329,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "apiserver_requested_deprecated_apis{\n  job=\"kubernetes-apiserver\",\n  app_name=~\"$app_name\",\n  app_version=~\"$app_version\",\n  region=~\"$region\",\n  cluster_id=~\"$cluster_id\",\n  env=~\"$env\"\n}",
+          "expr": "apiserver_requested_deprecated_apis{\n  job=\"kubernetes-apiserver\",\n  app=~\"$app\",\n  region=~\"$region\",\n  cluster_id=~\"$cluster_id\",\n  env=~\"$env\"\n}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -509,7 +509,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(\n  ${rate_func}(\n    apiserver_request_duration_seconds_sum{\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (instance)\n/\nsum(\n  ${rate_func}(\n    apiserver_request_duration_seconds_count{\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (instance)",
+          "expr": "sum(\n  ${rate_func}(\n    apiserver_request_duration_seconds_sum{\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (instance)\n/\nsum(\n  ${rate_func}(\n    apiserver_request_duration_seconds_count{\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (instance)",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ instance }}",
@@ -613,7 +613,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (verb) (\n  ${rate_func}(\n    apiserver_request_total{\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "expr": "sum by (verb) (\n  ${rate_func}(\n    apiserver_request_total{\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ verb}}",
@@ -717,7 +717,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(instance) (\n  ${rate_func}(\n    apiserver_request_total{\n      code=~\"5..\",\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)\n/\nsum by(instance) (\n  ${rate_func}(\n    apiserver_request_total{\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "expr": "sum by(instance) (\n  ${rate_func}(\n    apiserver_request_total{\n      code=~\"5..\",\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)\n/\nsum by(instance) (\n  ${rate_func}(\n    apiserver_request_total{\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ instance }}",
@@ -821,7 +821,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(\n  ${rate_func}(\n    apiserver_request_duration_seconds_sum{\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (verb)\n/\nsum(\n  ${rate_func}(\n    apiserver_request_duration_seconds_count{\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (verb)",
+          "expr": "sum(\n  ${rate_func}(\n    apiserver_request_duration_seconds_sum{\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (verb)\n/\nsum(\n  ${rate_func}(\n    apiserver_request_duration_seconds_count{\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (verb)",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ verb }}",
@@ -925,7 +925,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(\n  ${rate_func}(\n    apiserver_request_total{\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (instance)",
+          "expr": "sum(\n  ${rate_func}(\n    apiserver_request_total{\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (instance)",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ instance }}",
@@ -1027,7 +1027,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(verb) (\n  ${rate_func}(\n    apiserver_request_total{\n      code=~\"5..\",\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)\n/\nsum by(verb) (\n  ${rate_func}(\n    apiserver_request_total{\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
+          "expr": "sum by(verb) (\n  ${rate_func}(\n    apiserver_request_total{\n      code=~\"5..\",\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)\n/\nsum by(verb) (\n  ${rate_func}(\n    apiserver_request_total{\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n)",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ verb }}",
@@ -1130,7 +1130,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "${rate_func}(\n  process_cpu_seconds_total{\n    job=\"kubernetes-apiserver\",\n    app_name=~\"$app_name\",\n    app_version=~\"$app_version\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }[$__rate_interval]\n)",
+          "expr": "${rate_func}(\n  process_cpu_seconds_total{\n    job=\"kubernetes-apiserver\",\n    app=~\"$app\",\n    region=~\"$region\",\n    cluster_id=~\"$cluster_id\",\n    env=~\"$env\"\n  }[$__rate_interval]\n)",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ instance }}",
@@ -1234,7 +1234,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "process_resident_memory_bytes{\n  job=\"kubernetes-apiserver\",\n  app_name=~\"$app_name\",\n  app_version=~\"$app_version\",\n  region=~\"$region\",\n  cluster_id=~\"$cluster_id\",\n  env=~\"$env\"\n}",
+          "expr": "process_resident_memory_bytes{\n  job=\"kubernetes-apiserver\",\n  app=~\"$app\",\n  region=~\"$region\",\n  cluster_id=~\"$cluster_id\",\n  env=~\"$env\"\n}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ instance }}",
@@ -1338,7 +1338,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(\n  ${rate_func}(\n    workqueue_depth{\n      job=\"kubernetes-apiserver\",\n      app_name=~\"$app_name\",\n      app_version=~\"$app_version\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (instance)",
+          "expr": "sum(\n  ${rate_func}(\n    workqueue_depth{\n      job=\"kubernetes-apiserver\",\n      app=~\"$app\",\n      region=~\"$region\",\n      cluster_id=~\"$cluster_id\",\n      env=~\"$env\"\n    }[$__rate_interval]\n  )\n) by (instance)",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ instance }}",
@@ -1362,21 +1362,22 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(apiserver_request_total,app_name)",
+        "definition": "label_values(apiserver_request_total,app)",
         "includeAll": true,
         "label": "App",
         "multi": true,
-        "name": "app_name",
+        "name": "app",
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(apiserver_request_total,app_name)",
+          "query": "label_values(apiserver_request_total,app)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
         "sort": 1,
-        "type": "query"
+        "type": "query",
+        "allValue": ".*"
       },
       {
         "current": {},
@@ -1384,29 +1385,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(apiserver_request_total{app_name=~\"$app_name\"},app_version)",
-        "includeAll": true,
-        "label": "App Version",
-        "multi": true,
-        "name": "app_version",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(apiserver_request_total{app_name=~\"$app_name\"},app_version)",
-          "refId": "VariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "sort": 4,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "victoriametrics-metrics-datasource",
-          "uid": "${DS_VICTORIAMETRICS}"
-        },
-        "definition": "label_values(apiserver_request_total{app_name=~\"$app_name\", app_version=~\"$app_version\"},region)",
+        "definition": "label_values(apiserver_request_total{app=~\"$app\"},region)",
         "includeAll": true,
         "label": "Region",
         "multi": true,
@@ -1414,7 +1393,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(apiserver_request_total{app_name=~\"$app_name\", app_version=~\"$app_version\"},region)",
+          "query": "label_values(apiserver_request_total{app=~\"$app\"},region)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1428,7 +1407,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(apiserver_request_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"},cluster_id)",
+        "definition": "label_values(apiserver_request_total{app=~\"$app\", region=~\"$region\"},cluster_id)",
         "includeAll": true,
         "label": "Cluster",
         "multi": true,
@@ -1436,7 +1415,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(apiserver_request_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\"},cluster_id)",
+          "query": "label_values(apiserver_request_total{app=~\"$app\", region=~\"$region\"},cluster_id)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1450,7 +1429,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS}"
         },
-        "definition": "label_values(apiserver_request_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
+        "definition": "label_values(apiserver_request_total{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
         "includeAll": true,
         "label": "Environment",
         "multi": true,
@@ -1458,7 +1437,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(apiserver_request_total{app_name=~\"$app_name\", app_version=~\"$app_version\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
+          "query": "label_values(apiserver_request_total{app=~\"$app\", region=~\"$region\", cluster_id=~\"$cluster_id\"},env)",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1471,7 +1450,7 @@
           "text": "rate",
           "value": "rate"
         },
-        "description": "This variable controls the mathematical function used to calculate per-second rates across the dashboard.\n\n    Overview (rate): Calculates the average rate over the entire time interval. Best for spotting trends, capacity planning, and long-term views.\n\n    Debug (irate): Calculates the \"instant\" rate based on the last two data points. Best for high-resolution troubleshooting and catching micro-spikes.\n\n⚠️ Warning: irate should only be used when zoomed in to < 1 hour. On longer time ranges (e.g., 7 days), irate ignores most data points between pixels and will provide a misleading representation of your traffic.",
+        "description": "This variable controls the mathematical function used to calculate per-second rates across the dashboard.\n\n    Overview (rate): Calculates the average rate over the entire time interval. Best for spotting trends, capacity planning, and long-term views.\n\n    Debug (irate): Calculates the \"instant\" rate based on the last two data points. Best for high-resolution troubleshooting and catching micro-spikes.\n\n\u26a0\ufe0f Warning: irate should only be used when zoomed in to < 1 hour. On longer time ranges (e.g., 7 days), irate ignores most data points between pixels and will provide a misleading representation of your traffic.",
         "label": "Mode",
         "name": "rate_func",
         "options": [
@@ -1513,6 +1492,6 @@
   "timezone": "utc",
   "title": "API Server",
   "uid": "k8s_system_apisrv",
-  "version": 27,
+  "version": 29,
   "weekStart": ""
 }
