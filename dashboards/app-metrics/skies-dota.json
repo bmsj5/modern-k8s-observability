@@ -157,7 +157,7 @@
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -259,15 +259,16 @@
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull",
-            "max"
+            "min",
+            "max",
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -353,7 +354,7 @@
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -409,14 +410,15 @@
         "legend": {
           "calcs": [
             "lastNotNull",
-            "max"
+            "max",
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -473,14 +475,15 @@
         "legend": {
           "calcs": [
             "lastNotNull",
-            "max"
+            "max",
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -539,14 +542,15 @@
         "legend": {
           "calcs": [
             "lastNotNull",
-            "max"
+            "max",
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -615,15 +619,14 @@
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull",
-            "max"
+            "lastNotNull"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -634,8 +637,8 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum by (operation, status) (rate(skies_dota_bot.operations.duration_count{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\"}[$__rate_interval]))",
-          "legendFormat": "{{operation}} {{status}}",
+          "expr": "sum by (operation) (rate(skies_dota_bot.operations.duration_count{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",operation=~\"$operation\"}[$__rate_interval]))",
+          "legendFormat": "{{operation}}",
           "range": true,
           "refId": "A"
         }
@@ -667,7 +670,53 @@
           "min": 0,
           "unit": "ms"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "P50"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "P95"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "P99"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -679,15 +728,16 @@
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull",
-            "max"
+            "min",
+            "max",
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -698,8 +748,8 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.50, sum by (operation, le) (rate(skies_dota_bot.operations.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\"}[$__rate_interval])))",
-          "legendFormat": "{{operation}} p50",
+          "expr": "histogram_quantile(0.5, sum by (le) (rate(skies_dota_bot.operations.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",operation=~\"$operation\"}[$__rate_interval])))",
+          "legendFormat": "P50",
           "range": true,
           "refId": "A"
         },
@@ -709,8 +759,8 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (operation, le) (rate(skies_dota_bot.operations.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\"}[$__rate_interval])))",
-          "legendFormat": "{{operation}} p95",
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(skies_dota_bot.operations.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",operation=~\"$operation\"}[$__rate_interval])))",
+          "legendFormat": "P95",
           "range": true,
           "refId": "B"
         },
@@ -720,13 +770,13 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.99, sum by (operation, le) (rate(skies_dota_bot.operations.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\"}[$__rate_interval])))",
-          "legendFormat": "{{operation}} p99",
+          "expr": "histogram_quantile(0.99, sum by (le) (rate(skies_dota_bot.operations.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",operation=~\"$operation\"}[$__rate_interval])))",
+          "legendFormat": "P99",
           "range": true,
           "refId": "C"
         }
       ],
-      "title": "Latency by Operation",
+      "title": "Latency",
       "type": "timeseries"
     },
     {
@@ -773,19 +823,20 @@
         "x": 0,
         "y": 27
       },
-      "id": 21,
+      "id": 24,
       "options": {
         "legend": {
           "calcs": [
             "lastNotNull",
-            "max"
+            "max",
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -796,8 +847,72 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (increase(skies_dota_bot.deaths{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval]))",
-          "legendFormat": "{{lobby_id}} bot {{bot_number}}",
+          "expr": "max by (bot_number) (skies_dota_bot.kills{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"})",
+          "legendFormat": "bot {{bot_number}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Kills",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "lineWidth": 1,
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            }
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 27
+      },
+      "id": 25,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "max by (bot_number) (skies_dota_bot.player_deaths{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"})",
+          "legendFormat": "bot {{bot_number}}",
           "range": true,
           "refId": "A"
         }
@@ -833,22 +948,23 @@
       "gridPos": {
         "h": 8,
         "w": 8,
-        "x": 8,
+        "x": 16,
         "y": 27
       },
-      "id": 22,
+      "id": 26,
       "options": {
         "legend": {
           "calcs": [
             "lastNotNull",
-            "max"
+            "max",
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -859,8 +975,72 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (skies_dota_bot.gpm{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"})",
-          "legendFormat": "{{lobby_id}} bot {{bot_number}}",
+          "expr": "max by (bot_number) (skies_dota_bot.assists{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"})",
+          "legendFormat": "bot {{bot_number}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Assists",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "lineWidth": 1,
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            }
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 35
+      },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "max by (bot_number) (skies_dota_bot.gpm{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"})",
+          "legendFormat": "bot {{bot_number}}",
           "range": true,
           "refId": "A"
         }
@@ -895,23 +1075,24 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 8,
-        "x": 16,
-        "y": 27
+        "w": 12,
+        "x": 12,
+        "y": 35
       },
       "id": 23,
       "options": {
         "legend": {
           "calcs": [
             "lastNotNull",
-            "max"
+            "max",
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -922,98 +1103,13 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (skies_dota_bot.kda{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"})",
-          "legendFormat": "{{lobby_id}} bot {{bot_number}}",
+          "expr": "max by (bot_number) (skies_dota_bot.kda{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"})",
+          "legendFormat": "bot {{bot_number}}",
           "range": true,
           "refId": "A"
         }
       ],
       "title": "KDA",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "victoriametrics-metrics-datasource",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "lineWidth": 1,
-            "showPoints": "auto",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            }
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 35
-      },
-      "id": 24,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (skies_dota_bot.kills{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"})",
-          "legendFormat": "kills {{lobby_id}} bot {{bot_number}}",
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (skies_dota_bot.player_deaths{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"})",
-          "legendFormat": "deaths {{lobby_id}} bot {{bot_number}}",
-          "range": true,
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (skies_dota_bot.assists{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"})",
-          "legendFormat": "assists {{lobby_id}} bot {{bot_number}}",
-          "range": true,
-          "refId": "C"
-        }
-      ],
-      "title": "Kills / Deaths / Assists",
       "type": "timeseries"
     },
     {
@@ -1034,7 +1130,7 @@
         "type": "victoriametrics-metrics-datasource",
         "uid": "${DS_VICTORIAMETRICS}"
       },
-      "description": "Totals over the selected time range, grouped by lobby_id. Sort/limit in the table for last N games.",
+      "description": "Most recent lobby_id values (top 10). Click a Lobby to set the Lobby ID filter.",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -1045,31 +1141,23 @@
             "filterable": true,
             "inspect": false
           },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              }
-            ]
-          }
+          "mappings": []
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "Dead p95 (ms)"
+              "options": "Lobby"
             },
             "properties": [
               {
-                "id": "unit",
-                "value": "ms"
-              },
-              {
-                "id": "decimals",
-                "value": 0
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Filter to this lobby",
+                    "url": "/d/skies-dota-bot-metrics/app-metrics-skies-dota?orgId=1&from=${__from}&to=${__to}&timezone=browser&var-lobby_id=${__value.raw}&${app:queryparam}&${app_version:queryparam}&${region:queryparam}&${bot_number:queryparam}&${operation:queryparam}&${env:queryparam}&refresh=30s"
+                  }
+                ]
               }
             ]
           }
@@ -1096,7 +1184,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Deaths"
+            "displayName": "Last seen"
           }
         ]
       },
@@ -1108,142 +1196,29 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (lobby_id, bot_number) (increase(skies_dota_bot.deaths{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\",lobby_id!=\"\"}[$__range])))",
+          "expr": "topk(10, max by (lobby_id) (tlast_over_time(skies_dota_bot.lobbies{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id!=\"\"}[$__range])))",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (increase(skies_dota_bot.buybacks{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\",lobby_id!=\"\"}[$__range]))",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "__auto",
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (increase(skies_dota_bot.teleports.bought{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\",lobby_id!=\"\"}[$__range]))",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "__auto",
-          "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (increase(skies_dota_bot.clicks{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\",lobby_id!=\"\"}[$__range]))",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "__auto",
-          "refId": "D"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (lobby_id, bot_number, le) (rate(skies_dota_bot.death.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\",lobby_id!=\"\"}[$__range])))",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "__auto",
-          "refId": "E"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (increase(skies_dota_bot.defensive_outpush{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\",lobby_id!=\"\"}[$__range]))",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "__auto",
-          "refId": "F"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "max by (lobby_id, bot_number) (skies_dota_bot.gpm{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\",lobby_id!=\"\"})",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "__auto",
-          "refId": "G"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "max by (lobby_id, bot_number) (skies_dota_bot.kda{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\",lobby_id!=\"\"})",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "__auto",
-          "refId": "H"
         }
       ],
       "title": "Last Games",
       "transformations": [
         {
-          "id": "seriesToRows",
-          "options": {}
-        },
-        {
-          "id": "joinByField",
-          "options": {
-            "byField": "lobby_id",
-            "mode": "outer"
-          }
-        },
-        {
           "id": "organize",
           "options": {
             "excludeByName": {
               "Time": true,
-              "Time 1": true,
-              "Time 2": true,
-              "Time 3": true,
-              "Time 4": true,
-              "Time 5": true,
-              "Time 6": true,
-              "Time 7": true,
-              "__name__": true,
-              "__name__ 1": true,
-              "__name__ 2": true,
-              "__name__ 3": true,
-              "__name__ 4": true,
-              "__name__ 5": true,
-              "__name__ 6": true,
-              "__name__ 7": true
+              "__name__": true
             },
             "renameByName": {
-              "Value #Deaths": "Deaths",
-              "Value #Buybacks": "Buybacks",
-              "Value #Teleports": "Teleports",
-              "Value #Clicks": "Clicks",
-              "Value #DeadP95": "Dead p95 (ms)",
-              "Value #Outpush": "Outpush",
-              "Value #GPM": "GPM",
-              "Value #KDA": "KDA",
-              "bot_number": "Bot",
-              "lobby_id": "Lobby"
+              "lobby_id": "Lobby",
+              "Value": "Last seen"
+            },
+            "indexByName": {
+              "lobby_id": 0,
+              "Value": 1
             }
           }
         }
@@ -1284,30 +1259,30 @@
               "mode": "none"
             }
           },
-          "min": 0,
-          "unit": "ms"
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 8,
         "x": 0,
         "y": 55
       },
-      "id": 41,
+      "id": 43,
       "options": {
         "legend": {
           "calcs": [
             "lastNotNull",
-            "max"
+            "max",
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -1318,8 +1293,73 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.50, sum by (lobby_id, le) (rate(skies_dota_bot.death.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval])))",
-          "legendFormat": "{{lobby_id}} p50",
+          "expr": "sum by (bot_number) (increase(skies_dota_bot.deaths{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval]))",
+          "legendFormat": "bot {{bot_number}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Death Events",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "lineWidth": 1,
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            }
+          },
+          "min": 0,
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 55
+      },
+      "id": 41,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.50, sum by (le) (rate(skies_dota_bot.death.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval])))",
+          "legendFormat": "P50",
           "range": true,
           "refId": "A"
         },
@@ -1329,8 +1369,8 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (lobby_id, le) (rate(skies_dota_bot.death.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval])))",
-          "legendFormat": "{{lobby_id}} p95",
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(skies_dota_bot.death.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval])))",
+          "legendFormat": "P95",
           "range": true,
           "refId": "B"
         },
@@ -1340,8 +1380,8 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.99, sum by (lobby_id, le) (rate(skies_dota_bot.death.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval])))",
-          "legendFormat": "{{lobby_id}} p99",
+          "expr": "histogram_quantile(0.99, sum by (le) (rate(skies_dota_bot.death.duration_bucket{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval])))",
+          "legendFormat": "P99",
           "range": true,
           "refId": "C"
         }
@@ -1376,8 +1416,8 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
+        "w": 8,
+        "x": 16,
         "y": 55
       },
       "id": 42,
@@ -1385,14 +1425,15 @@
         "legend": {
           "calcs": [
             "lastNotNull",
-            "max"
+            "max",
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -1403,8 +1444,8 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (increase(skies_dota_bot.buybacks{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval]))",
-          "legendFormat": "buyback {{lobby_id}} bot {{bot_number}}",
+          "expr": "sum by (bot_number) (increase(skies_dota_bot.buybacks{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval]))",
+          "legendFormat": "buyback bot {{bot_number}}",
           "range": true,
           "refId": "A"
         },
@@ -1414,8 +1455,8 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (increase(skies_dota_bot.teleports.bought{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval]))",
-          "legendFormat": "tp {{lobby_id}} bot {{bot_number}}",
+          "expr": "sum by (bot_number) (increase(skies_dota_bot.teleports.bought{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval]))",
+          "legendFormat": "tp bot {{bot_number}}",
           "range": true,
           "refId": "B"
         },
@@ -1425,8 +1466,8 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum by (lobby_id, bot_number) (increase(skies_dota_bot.defensive_outpush{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval]))",
-          "legendFormat": "outpush {{lobby_id}} bot {{bot_number}}",
+          "expr": "sum by (bot_number) (increase(skies_dota_bot.defensive_outpush{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\",lobby_id=~\"$lobby_id\"}[$__rate_interval]))",
+          "legendFormat": "outpush bot {{bot_number}}",
           "range": true,
           "refId": "C"
         }
@@ -1555,7 +1596,7 @@
           "text": ".*",
           "value": ".*"
         },
-        "description": "Lobby ID regex. Default .* matches all. Paste an exact lobby_id to focus one game.",
+        "description": "Lobby ID regex. Default .* = all games (combat gauges use max-per-bot, not sum). Click a row in Last Games to focus one lobby; set .* to clear.",
         "label": "Lobby ID",
         "name": "lobby_id",
         "options": [
@@ -1578,6 +1619,29 @@
         },
         "definition": "label_values(skies_dota_bot.operations.duration_count{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\"}, bot_number)",
         "query": "label_values(skies_dota_bot.operations.duration_count{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\"}, bot_number)",
+        "includeAll": true,
+        "allValue": ".*",
+        "multi": true,
+        "refresh": 1,
+        "sort": 1,
+        "regex": "",
+        "options": [],
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        }
+      },
+      {
+        "name": "operation",
+        "label": "Operation",
+        "type": "query",
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "definition": "label_values(skies_dota_bot.operations.duration_count{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\"}, operation)",
+        "query": "label_values(skies_dota_bot.operations.duration_count{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\"}, operation)",
         "includeAll": true,
         "allValue": ".*",
         "multi": true,
