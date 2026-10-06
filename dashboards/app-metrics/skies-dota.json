@@ -428,7 +428,7 @@
             "uid": "${DS_VICTORIAMETRICS}"
           },
           "editorMode": "code",
-          "expr": "sum by (bot_number) (running_sum(increase(skies_dota_bot.play_time.minutes{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\"}[$__interval]))) / 60",
+          "expr": "sum by (bot_number) (increase_pure(coordinator.bot.play_time.minutes{app=~\"$app\",app_version=~\"$app_version\",bot_number=~\"$bot_number\",env=~\"$env\"}[365d])) / 60",
           "legendFormat": "bot {{bot_number}}",
           "range": true,
           "refId": "A"
@@ -630,89 +630,6 @@
       ],
       "title": "Match Duration",
       "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "victoriametrics-metrics-datasource",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "description": "Play hours added in the selected time range (increase handles bot restarts).",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "filterable": true,
-            "inspect": false
-          },
-          "decimals": 2,
-          "unit": "h"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 17
-      },
-      "id": 9,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": true
-        },
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Hours"
-          }
-        ]
-      },
-      "pluginVersion": "12.3.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "${DS_VICTORIAMETRICS}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (bot_number) (increase(skies_dota_bot.play_time.minutes{app=~\"$app\",app_version=~\"$app_version\",region=~\"$region\",bot_number=~\"$bot_number\",env=~\"$env\"}[$__range])) / 60",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "__auto",
-          "refId": "A"
-        }
-      ],
-      "title": "Play Time Totals",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "__name__": true
-            },
-            "renameByName": {
-              "bot_number": "Bot",
-              "Value": "Hours"
-            },
-            "indexByName": {
-              "bot_number": 0,
-              "Value": 1
-            }
-          }
-        }
-      ],
-      "type": "table"
     },
     {
       "collapsed": false,
